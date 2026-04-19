@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Ceetify Logistics</title>
+  <meta
+    name="description"
+    content="Ceetify Logistics premium one-file multi-page website for delivery, dispatch, partnership and contact."
+  />
+  <meta name="theme-color" content="#173f90" />
+
+  <style>
+    :root{
+      --bg:#f7f8fc;
+      --bg-2:#f2f5fb;
+      --panel:#ffffff;
+      --panel-2:#fbfcff;
+      --text:#132347;
+      --muted:#66728b;
+      --line:#e7ebf3;
+      --primary:#173f90;
+      --primary-2:#255cd6;
+      --accent:#ef4046;
+      --accent-2:#ff6469;
+      --soft-red:#fff2f3;
+      --soft-blue:#eef4ff;
+      --success:#19965d;
+      --danger:#d14b4b;
+      --shadow:0 20px 60px rgba(19,35,71,.08);
+      --shadow-soft:0 10px 28px rgba(19,35,71,.06);
+      --radius:28px;
+      --radius-lg:40px;
+      --container:1240px;
+      --safe-top:env(safe-area-inset-top, 0px);
+      --safe-bottom:env(safe-area-inset-bottom, 0px);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 0% 20%, rgba(23,63,144,.05), transparent 28%),
+        radial-gradient(circle at 100% 0%, rgba(239,64,70,.04), transparent 22%),
+        linear-gradient(180deg, #fbfbfe 0%, #f4f6fb 100%);
+    }
+
+    body::before,
+    body::after{
+      content:"";
+      position:fixed;
+      pointer-events:none;
+      z-index:-1;
+      border-radius:50%;
+      background:rgba(23,63,144,.035);
+      filter:blur(0.5px);
+    }
+
+    body::before{
+      width:1000px;
+      height:300px;
+      top:100px;
+      left:-280px;
+      transform:rotate(-8deg);
+    }
+
+    body::after{
+      width:980px;
+      height:280px;
+      bottom:60px;
+      right:-260px;
+      transform:rotate(8deg);
+    }
+
+    a{text-decoration:none;color:inherit}
+    img,video{display:block;max-width:100%}
+    button,input,select,textarea{font:inherit}
+    .container{width:min(var(--container), calc(100% - 24px)); margin:0 auto}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:300;
+      padding-top:var(--safe-top);
+      background:rgba(255,255,255,.82);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(19,35,71,.05);
+    }
+
+    .topbar-inner{
+      min-height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:10px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-logo{
+      width:58px;
+      height:58px;
+      border-radius:16px;
+      object-fit:cover;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+      flex:0 0 auto;
+    }
+
+    .brand-copy h1{
+      margin:0;
+      font-size:1.08rem;
+      line-height:1.06;
+      font-weight:950;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      color:var(--primary);
+    }
+
+    .brand-copy p{
+      margin:4px 0 0;
+      color:var(--accent);
+      font-size:.88rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-nav{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav-btn,
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius:999px;
+      padding:14px 20px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      line-height:1;
+      font-weight:800;
+      transition:.24s ease;
+    }
+
+    .nav-btn{
+      background:#fff;
+      color:var(--text);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .nav-btn:hover,
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .nav-btn.active{
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#fff;
+      border-color:transparent;
+      box-shadow:0 14px 30px rgba(23,63,144,.20);
+    }
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow:0 14px 30px rgba(239,64,70,.20);
+    }
+
+    .btn-soft{
+      color:var(--primary);
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .btn-accent{
+      color:#fff;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow:0 14px 30px rgba(239,64,70,.20);
+    }
+
+    .btn-dark{
+      color:#fff;
+      background:linear-gradient(135deg, #122347, #21488d);
+      box-shadow:0 14px 30px rgba(19,35,71,.20);
+    }
+
+    .btn-block{width:100%}
+
+    .app-shell{
+      padding:24px 0 30px;
+    }
+
+    .screen-wrap{
+      position:relative;
+      min-height:calc(100vh - 130px);
+    }
+
+    .screen{
+      display:none;
+      animation:screenIn .45s ease;
+    }
+
+    .screen.active{
+      display:block;
+    }
+
+    @keyframes screenIn{
+      from{
+        opacity:0;
+        transform:translateY(16px) scale(.99);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+      }
+    }
+
+    .hero-card,
+    .card,
+    .feature-card,
+    .service-card,
+    .testimonial,
+    .contact-card,
+    .faq-card,
+    .estimator-card,
+    .summary-card,
+    .cta-card,
+    .gallery-card{
+      background:rgba(255,255,255,.95);
+      border:1px solid var(--line);
+      border-radius:30px;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:22px;
+    }
+
+    .hero-card{
+      position:relative;
+      overflow:hidden;
+      min-height:620px;
+      padding:26px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.94), rgba(248,250,255,.98));
+      color:var(--text);
+      box-shadow:var(--shadow);
+      isolation:isolate;
+    }
+
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:auto -16% 62% -16%;
+      height:220px;
+      background:radial-gradient(ellipse at center, rgba(23,63,144,.08), rgba(23,63,144,0) 70%);
+      pointer-events:none;
+    }
+
+    .hero-card::after{
+      content:"";
+      position:absolute;
+      width:900px;
+      height:300px;
+      left:-120px;
+      bottom:-90px;
+      border-radius:50%;
+      background:rgba(23,63,144,.035);
+      transform:rotate(-6deg);
+      z-index:0;
+    }
+
+    .hero-main-grid{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns:1fr 1.1fr;
+      gap:10px;
+      align-items:center;
+      min-height:560px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      max-width:100%;
+      padding:10px 14px;
+      border-radius:999px;
+      background:var(--soft-blue);
+      border:1px solid rgba(23,63,144,.08);
+      font-size:.82rem;
+      font-weight:850;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      margin-bottom:16px;
+      color:var(--primary);
+    }
+
+    .hero-copy{
+      padding:10px 6px 10px 10px;
+    }
+
+    .hero-title{
+      margin:0 0 14px;
+      max-width:720px;
+      font-size:clamp(2.6rem, 5vw, 4.6rem);
+      line-height:.96;
+      letter-spacing:-.05em;
+      font-weight:1000;
+      color:var(--primary);
+    }
+
+    .hero-title .red{
+      color:var(--accent);
+      display:block;
+    }
+
+    .hero-subtitle{
+      margin:0 0 22px;
+      max-width:450px;
+      color:#3d4965;
+      line-height:1.8;
+      font-size:1.04rem;
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+      margin-bottom:22px;
+    }
+
+    .hero-point{
+      padding:15px 16px;
+      border-radius:20px;
+      background:#fff;
+      border:1px solid var(--line);
+      font-size:.94rem;
+      font-weight:760;
+      color:#31415c;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .hero-phone{
+      width:max-content;
+      min-width:220px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px 18px;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .hero-phone-icon{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(239,64,70,.10);
+      color:var(--accent);
+      font-size:1.15rem;
+      flex:0 0 auto;
+    }
+
+    .hero-phone strong{
+      display:block;
+      color:var(--primary);
+      font-size:1.05rem;
+    }
+
+    .hero-phone span{
+      display:block;
+      color:var(--muted);
+      font-size:.94rem;
+    }
+
+    .hero-visual{
+      position:relative;
+      min-height:560px;
+    }
+
+    .hero-map{
+      position:absolute;
+      inset:20px 0 auto 0;
+      width:100%;
+      opacity:.14;
+      pointer-events:none;
+    }
+
+    .hero-main-image{
+      position:absolute;
+      right:0;
+      bottom:0;
+      width:min(100%, 820px);
+      object-fit:contain;
+      filter:drop-shadow(0 20px 24px rgba(19,35,71,.10));
+    }
+
+    .hero-pin{
+      position:absolute;
+      width:26px;
+      height:26px;
+      border-radius:50% 50% 50% 0;
+      transform:rotate(-45deg);
+      background:var(--accent);
+      box-shadow:0 10px 18px rgba(239,64,70,.16);
+    }
+
+    .hero-pin::after{
+      content:"";
+      position:absolute;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#fff;
+      top:8px;
+      left:8px;
+    }
+
+    .hero-pin.one{top:150px; left:120px}
+    .hero-pin.two{top:140px; right:54px}
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .section-head.center{
+      text-align:center;
+      display:block;
+      margin-bottom:26px;
+    }
+
+    .section-head h2{
+      margin:0 0 8px;
+      font-size:clamp(2rem, 4vw, 3rem);
+      line-height:1.02;
+      letter-spacing:-.04em;
+      color:var(--primary);
+    }
+
+    .section-head p{
+      margin:0;
+      max-width:760px;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:1.03rem;
+    }
+
+    .hero-gallery{
+      padding-top:24px;
+    }
+
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:22px;
+    }
+
+    .gallery-card{
+      overflow:hidden;
+    }
+
+    .gallery-head{
+      padding:20px 20px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .gallery-head h3{
+      margin:0;
+      font-size:1.12rem;
+      color:var(--primary);
+    }
+
+    .gallery-head p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:.92rem;
+    }
+
+    .badge{
+      padding:10px 14px;
+      border-radius:999px;
+      background:#fff3f4;
+      color:var(--accent);
+      font-size:.84rem;
+      font-weight:850;
+      white-space:nowrap;
+    }
+
+    .slider-shell{
+      position:relative;
+      margin:12px 18px 18px;
+      min-height:400px;
+      overflow:hidden;
+      border-radius:28px;
+      background:#e0e9f3;
+    }
+
+    .slider-track{
+      display:flex;
+      width:100%;
+      height:100%;
+      transition:transform .75s ease;
+    }
+
+    .slide{
+      min-width:100%;
+      height:400px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .slide img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .slide::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(0deg, rgba(19,35,71,.68) 0%, rgba(19,35,71,.16) 48%, rgba(19,35,71,.02) 100%);
+    }
+
+    .slide-copy{
+      position:absolute;
+      left:24px;
+      right:24px;
+      bottom:24px;
+      z-index:2;
+      color:#fff;
+      max-width:560px;
+    }
+
+    .slide-copy h4{
+      margin:0 0 8px;
+      font-size:1.45rem;
+      line-height:1.05;
+    }
+
+    .slide-copy p{
+      margin:0;
+      color:rgba(255,255,255,.92);
+      line-height:1.7;
+      font-size:.96rem;
+    }
+
+    .dots{
+      position:absolute;
+      left:50%;
+      bottom:14px;
+      transform:translateX(-50%);
+      z-index:6;
+      display:flex;
+      gap:8px;
+    }
+
+    .dot{
+      width:10px;
+      height:10px;
+      border:none;
+      border-radius:50%;
+      background:rgba(255,255,255,.45);
+      cursor:pointer;
+      padding:0;
+      transition:.25s ease;
+    }
+
+    .dot.active{
+      width:28px;
+      border-radius:999px;
+      background:#fff;
+    }
+
+    .video-wrap{
+      padding:0 18px 18px;
+    }
+
+    .video-box{
+      min-height:400px;
+      border-radius:28px;
+      overflow:hidden;
+      position:relative;
+      background:#0f1e31;
+    }
+
+    .video-box video{
+      width:100%;
+      height:400px;
+      object-fit:cover;
+      background:#000;
+    }
+
+    .video-overlay{
+      position:absolute;
+      inset:auto 16px 16px 16px;
+      padding:16px;
+      border-radius:20px;
+      background:rgba(255,255,255,.94);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .video-overlay strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:1rem;
+      color:var(--primary);
+    }
+
+    .video-overlay span{
+      color:var(--muted);
+      line-height:1.7;
+      font-size:.93rem;
+    }
+
+    .feature-grid,
+    .service-grid,
+    .testimonials-grid{
+      display:grid;
+      gap:18px;
+    }
+
+    .feature-grid{
+      grid-template-columns:repeat(4, minmax(0,1fr));
+    }
+
+    .service-grid,
+    .testimonials-grid{
+      grid-template-columns:repeat(3, minmax(0,1fr));
+    }
+
+    .feature-card,
+    .service-card,
+    .testimonial{
+      padding:22px;
+      transform:translateY(14px);
+      opacity:0;
+      transition:.55s ease;
+    }
+
+    .feature-card.in-view,
+    .service-card.in-view,
+    .testimonial.in-view,
+    .coverage-card.in-view{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    .feature-icon{
+      width:56px;
+      height:56px;
+      display:grid;
+      place-items:center;
+      border-radius:18px;
+      background:linear-gradient(135deg, rgba(23,63,144,.08), rgba(239,64,70,.08));
+      color:var(--primary);
+      font-weight:950;
+      margin-bottom:14px;
+    }
+
+    .feature-card h3,
+    .service-card h3{
+      margin:0 0 8px;
+      font-size:1.08rem;
+      color:var(--primary);
+    }
+
+    .feature-card p,
+    .service-card ul,
+    .testimonial p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.78;
+      font-size:.95rem;
+    }
+
+    .service-card{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg, #fff, #fbfcff);
+      text-align:center;
+    }
+
+    .service-card::before{
+      content:"";
+      position:absolute;
+      inset:auto -30px -30px auto;
+      width:110px;
+      height:110px;
+      border-radius:50%;
+      background:rgba(23,63,144,.04);
+    }
+
+    .service-card ul{
+      padding-left:18px;
+      text-align:left;
+    }
+
+    .service-image{
+      width:100%;
+      height:96px;
+      object-fit:contain;
+      margin:0 auto 14px;
+    }
+
+    .coverage-grid{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:18px;
+    }
+
+    .coverage-card{
+      padding:22px;
+      transform:translateY(14px);
+      opacity:0;
+      transition:.55s ease;
+    }
+
+    .coverage-card h3{
+      margin:0 0 12px;
+      font-size:1.08rem;
+      color:var(--primary);
+    }
+
+    .coverage-card ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.86;
+      font-size:.95rem;
+    }
+
+    .estimator-grid{
+      display:grid;
+      grid-template-columns:1fr .92fr;
+      gap:22px;
+    }
+
+    .estimator-card,
+    .summary-card,
+    .faq-card,
+    .contact-card,
+    .cta-card{
+      padding:24px;
+    }
+
+    .summary-card{
+      background:linear-gradient(180deg, #fff, #f9fbff);
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+    }
+
+    .field.full{grid-column:1 / -1}
+
+    .field label{
+      font-size:.92rem;
+      font-weight:850;
+      color:#334559;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      min-height:54px;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      outline:none;
+      background:#fff;
+      color:var(--text);
+      transition:.2s ease;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .field textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus{
+      border-color:rgba(37,92,214,.35);
+      box-shadow:0 0 0 4px rgba(37,92,214,.08);
+    }
+
+    .summary-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:16px;
+    }
+
+    .summary-top h3{
+      margin:0 0 6px;
+      font-size:1.12rem;
+      color:var(--primary);
+    }
+
+    .summary-top p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:.94rem;
+    }
+
+    .price-figure{
+      min-width:fit-content;
+      padding:12px 16px;
+      border-radius:20px;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#fff;
+      text-align:center;
+      box-shadow:0 14px 30px rgba(23,63,144,.18);
+    }
+
+    .price-figure strong{
+      display:block;
+      font-size:1.65rem;
+      line-height:1;
+      margin-bottom:5px;
+    }
+
+    .price-figure span{
+      display:block;
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      opacity:.92;
+    }
+
+    .availability{
+      margin:0 0 16px;
+      padding:12px 14px;
+      border-radius:16px;
+      font-weight:850;
+      font-size:.94rem;
+      background:#fff;
+      border:1px solid var(--line);
+    }
+
+    .availability.ok{color:var(--success)}
+    .availability.warn{color:#d48a11}
+    .availability.bad{color:var(--danger)}
+
+    .summary-list{
+      display:grid;
+      gap:12px;
+      margin:16px 0 18px;
+    }
+
+    .summary-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .summary-item span{
+      color:var(--muted);
+      font-size:.92rem;
+    }
+
+    .summary-item strong{
+      text-align:right;
+      font-size:.96rem;
+      color:var(--text);
+    }
+
+    .summary-note{
+      margin:0 0 16px;
+      color:var(--muted);
+      line-height:1.76;
+      font-size:.93rem;
+    }
+
+    .cta-card{
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,.08), transparent 26%),
+        linear-gradient(135deg, #173f90, #255cd6);
+      color:#fff;
+      border:none;
+      box-shadow:0 24px 56px rgba(23,63,144,.22);
+    }
+
+    .cta-card h2{
+      margin:0 0 10px;
+      font-size:clamp(1.8rem, 3vw, 2.8rem);
+      letter-spacing:-.04em;
+      line-height:1.02;
+    }
+
+    .cta-card p{
+      margin:0 0 20px;
+      color:rgba(255,255,255,.88);
+      line-height:1.8;
+      max-width:820px;
+    }
+
+    .stars{
+      color:var(--accent);
+      font-size:1rem;
+      letter-spacing:.16em;
+      margin-bottom:14px;
+    }
+
+    .testimonial strong{
+      display:block;
+      font-size:1rem;
+      color:var(--text);
+      margin-top:16px;
+    }
+
+    .testimonial span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    .faq-grid{
+      display:grid;
+      gap:14px;
+    }
+
+    .faq-item{
+      overflow:hidden;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:#fbfdff;
+    }
+
+    .faq-btn{
+      width:100%;
+      background:none;
+      border:none;
+      cursor:pointer;
+      text-align:left;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px;
+      font-weight:850;
+      color:var(--text);
+    }
+
+    .faq-btn span:last-child{
+      font-size:1.3rem;
+      color:var(--primary);
+      line-height:1;
+    }
+
+    .faq-answer{
+      display:none;
+      padding:0 18px 18px;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:.95rem;
+    }
+
+    .faq-item.active .faq-answer{display:block}
+    .faq-item.active .faq-btn span:last-child{transform:rotate(45deg)}
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+    }
+
+    .contact-list{
+      display:grid;
+      gap:16px;
+      margin-top:12px;
+    }
+
+    .contact-item{
+      padding:16px 18px;
+      border-radius:20px;
+      background:#f8fbff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .contact-item small{
+      display:block;
+      margin-bottom:6px;
+      color:var(--muted);
+      font-size:.82rem;
+      font-weight:850;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .contact-item strong,
+    .contact-item a{
+      font-size:1rem;
+      line-height:1.7;
+      word-break:break-word;
+    }
+
+    .footer-note{
+      margin-top:18px;
+      padding:22px;
+      border-radius:26px;
+      background:#173f90;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 40px rgba(23,63,144,.20);
+    }
+
+    .footer-note p{
+      margin:0;
+      color:rgba(255,255,255,.86);
+      line-height:1.75;
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:400;
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      padding:16px;
+      background:rgba(10,20,30,.56);
+    }
+
+    .modal.active{display:flex}
+
+    .sheet{
+      width:min(720px, 100%);
+      max-height:min(92vh, 980px);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      background:#fff;
+      border-radius:32px 32px 18px 18px;
+      box-shadow:0 30px 80px rgba(0,0,0,.24);
+      animation:sheetUp .28s ease;
+    }
+
+    @keyframes sheetUp{
+      from{transform:translateY(24px);opacity:.6}
+      to{transform:translateY(0);opacity:1}
+    }
+
+    .sheet-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:22px 22px 14px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .sheet-head h3{
+      margin:0;
+      font-size:1.2rem;
+      color:var(--primary);
+    }
+
+    .close-btn{
+      width:44px;
+      height:44px;
+      border:none;
+      border-radius:50%;
+      cursor:pointer;
+      background:#f2f6fa;
+      color:var(--primary);
+      font-size:1.2rem;
+      font-weight:950;
+    }
+
+    .sheet-body{
+      padding:18px 22px 22px;
+      overflow:auto;
+    }
+
+    @media (max-width:1120px){
+      .hero-main-grid,
+      .gallery-grid,
+      .coverage-grid,
+      .estimator-grid,
+      .contact-grid{
+        grid-template-columns:1fr;
+      }
+
+      .feature-grid{
+        grid-template-columns:repeat(2, minmax(0,1fr));
+      }
+
+      .service-grid,
+      .testimonials-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .hero-visual{
+        min-height:430px;
+      }
+
+      .hero-main-image{
+        position:relative;
+        right:auto;
+        bottom:auto;
+        width:100%;
+        margin-top:10px;
+      }
+
+      .hero-pin{
+        display:none;
+      }
+    }
+
+    @media (max-width:760px){
+      .topbar-inner{
+        min-height:unset;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .top-nav{
+        width:100%;
+        justify-content:stretch;
+      }
+
+      .top-nav .nav-btn,
+      .top-nav .btn{
+        flex:1 1 calc(50% - 10px);
+      }
+
+      .hero-card{
+        min-height:auto;
+        padding:18px;
+        border-radius:30px;
+      }
+
+      .hero-points,
+      .feature-grid,
+      .service-grid,
+      .testimonials-grid,
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .image-card img,
+      .slider-shell,
+      .slide,
+      .video-box,
+      .video-box video{
+        min-height:290px;
+        height:290px;
+      }
+
+      .summary-top{
+        flex-direction:column;
+      }
+
+      .sheet-head,
+      .sheet-body{
+        padding-left:16px;
+        padding-right:16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <img src="icons/logo.png" alt="Ceetify Logistics Logo" class="brand-logo" />
+        <div class="brand-copy">
+          <h1>Ceetify Logistics</h1>
+          <p>Premium delivery and dispatch services</p>
+        </div>
+      </div>
+
+      <nav class="top-nav">
+        <button class="nav-btn active" data-screen="home">Home</button>
+        <button class="nav-btn" data-screen="services">Services</button>
+        <button class="nav-btn" data-screen="coverage">Coverage</button>
+        <button class="nav-btn" data-screen="estimator">Estimator</button>
+        <button class="nav-btn" data-screen="contact">Contact</button>
+        <button class="btn btn-primary open-order-form" type="button">Order Now</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <div class="container screen-wrap">
+
+      <section class="screen active" id="screen-home">
+        <div class="hero-grid">
+          <div class="hero-card">
+            <div class="hero-main-grid">
+              <div class="hero-copy">
+                <div class="eyebrow">Fast & reliable logistics</div>
+                <h2 class="hero-title">Fast & Reliable <span class="red">Logistics Solutions</span></h2>
+                <p class="hero-subtitle">
+                  Delivering your goods anywhere, anytime, with speed, professionalism and security.
+                </p>
+
+                <div class="hero-actions">
+                  <button type="button" class="btn btn-accent open-order-form">Book a Rider</button>
+                  <button type="button" class="btn btn-soft" data-go="estimator">Get a Free Quote</button>
+                </div>
+
+                <div class="hero-phone">
+                  <div class="hero-phone-icon">📞</div>
+                  <div>
+                    <strong>0 706 077 0401</strong>
+                    <span>Call Us 24/7</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-visual">
+                <img src="icons/world-map.png" alt="World map background" class="hero-map" />
+                <span class="hero-pin one"></span>
+                <span class="hero-pin two"></span>
+                <img src="icons/hero-logistics.png" alt="Ceetify rider and van" class="hero-main-image" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section style="padding-top:26px;">
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon">
+                <img src="icons/icon-delivery.png" alt="Nationwide delivery" style="width:38px;height:38px;object-fit:contain;">
+              </div>
+              <div>
+                <h3>Nationwide Delivery</h3>
+                <p>Fast delivery across the nation. We ensure your packages arrive on time, every time.</p>
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <img src="icons/icon-secure.png" alt="Quick and secure" style="width:38px;height:38px;object-fit:contain;">
+              </div>
+              <div>
+                <h3>Quick & Secure</h3>
+                <p>Safe and secure handling of your goods. Your shipments remain our priority.</p>
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <img src="icons/icon-tracking.png" alt="Real-time tracking" style="width:38px;height:38px;object-fit:contain;">
+              </div>
+              <div>
+                <h3>Real-Time Tracking</h3>
+                <p>Track your shipment in real-time and get updates every step of the way.</p>
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <img src="icons/icon-dispatch.png" alt="Dispatch support" style="width:38px;height:38px;object-fit:contain;">
+              </div>
+              <div>
+                <h3>Business Dispatch</h3>
+                <p>Reliable dispatch support for vendors, stores and growing businesses.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="hero-gallery">
+          <div class="section-head center">
+            <h2>Featured Visuals</h2>
+            <p>Professional service presentation with images and promotional video.</p>
+          </div>
+
+          <div class="gallery-grid">
+            <div class="gallery-card">
+              <div class="gallery-head">
+                <div>
+                  <h3>Image Gallery</h3>
+                  <p>Auto sliding advert display</p>
+                </div>
+                <div class="badge">Folder images</div>
+              </div>
+
+              <div class="slider-shell">
+                <div class="slider-track" id="sliderTrack"></div>
+                <div class="dots" id="sliderDots"></div>
+              </div>
+            </div>
+
+            <div class="gallery-card">
+              <div class="gallery-head">
+                <div>
+                  <h3>Video Highlight</h3>
+                  <p>Promotional brand video</p>
+                </div>
+                <div class="badge">MP4 video</div>
+              </div>
+
+              <div class="video-wrap">
+                <div class="video-box">
+                  <video controls autoplay muted loop playsinline poster="icons/advert-photo.png">
+                    <source src="icons/advert-video.mp4" type="video/mp4" />
+                  </video>
+                  <div class="video-overlay">
+                    <strong>Ceetify Logistics</strong>
+                    <span>Fast. Reliable. Professional.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen" id="screen-services">
+        <div class="section-head center">
+          <h2>Our Services</h2>
+          <p>Quick delivery support for urgent and everyday shipments.</p>
+        </div>
+
+        <div class="service-grid">
+          <div class="service-card">
+            <img src="icons/service-sameday.png" alt="Same day delivery" class="service-image" />
+            <h3>Same-Day Delivery</h3>
+            <p>Quick delivery for urgent shipments.</p>
+          </div>
+
+          <div class="service-card">
+            <img src="icons/service-express.png" alt="Express shipping" class="service-image" />
+            <h3>Express Shipping</h3>
+            <p>Speedy delivery for time-sensitive goods.</p>
+          </div>
+
+          <div class="service-card">
+            <img src="icons/service-warehouse.png" alt="Warehouse solutions" class="service-image" />
+            <h3>Warehouse Solutions</h3>
+            <p>Safe and secure storage for your goods.</p>
+          </div>
+        </div>
+
+        <section style="padding-top:26px;">
+          <div class="section-head center">
+            <h2>Why Choose Ceetify Logistics?</h2>
+            <p>Reliable service flow, clear communication and professional delivery support.</p>
+          </div>
+
+          <div class="cta-card">
+            <h2>Need dispatch support for your business?</h2>
+            <p>
+              Work with Ceetify Logistics for customer order fulfillment, vendor dispatch support
+              and smoother daily delivery operations.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:12px;">
+              <button type="button" class="btn btn-accent open-order-form">Book a Delivery</button>
+              <a
+                class="btn btn-soft"
+                href="https://wa.me/2348064934480?text=Hello%20Ceetify%20Logistics%2C%20I%20want%20to%20partner%20with%20you."
+                target="_blank"
+                rel="noopener"
+              >Partnership Enquiry</a>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen" id="screen-coverage">
+        <div class="section-head center">
+          <h2>Coverage Areas</h2>
+          <p>Owerri town, nearby areas, extended environs and selected intercity routes.</p>
+        </div>
+
+        <div class="coverage-grid">
+          <div class="coverage-card card">
+            <h3>Owerri Town</h3>
+            <ul>
+              <li>Ikenegbu</li>
+              <li>Aladinma</li>
+              <li>World Bank</li>
+              <li>Works Layout</li>
+              <li>New Owerri</li>
+              <li>IMSU</li>
+              <li>MCC</li>
+              <li>Douglas</li>
+              <li>Wetheral</li>
+              <li>GRA</li>
+              <li>Housing Estate</li>
+              <li>Prefab</li>
+            </ul>
+          </div>
+
+          <div class="coverage-card card">
+            <h3>Nearby Areas</h3>
+            <ul>
+              <li>Irete</li>
+              <li>Orogwe</li>
+              <li>Umuguma</li>
+              <li>Nekede</li>
+              <li>Ihiagwa</li>
+              <li>Avu</li>
+              <li>Obinze</li>
+              <li>Ohii</li>
+              <li>Naze</li>
+              <li>Egbu</li>
+              <li>Emekuku</li>
+              <li>Orji</li>
+              <li>Akwakuma</li>
+              <li>Amakohia</li>
+              <li>Ubomiri</li>
+            </ul>
+          </div>
+
+          <div class="coverage-card card">
+            <h3>Extended Environs</h3>
+            <ul>
+              <li>Mbaise</li>
+              <li>Mbaitoli</li>
+              <li>Ifakala</li>
+              <li>Orodo</li>
+              <li>Afara</li>
+              <li>Ogwa</li>
+              <li>Ngor Okpala</li>
+              <li>Ikeduru</li>
+              <li>Amaimo</li>
+              <li>Obowo</li>
+              <li>Okigwe</li>
+              <li>Oguta</li>
+              <li>Mgbidi</li>
+              <li>Awo-Omamma</li>
+            </ul>
+          </div>
+
+          <div class="coverage-card card">
+            <h3>Intercity</h3>
+            <ul>
+              <li>Aba</li>
+              <li>Umuahia</li>
+              <li>Port Harcourt</li>
+              <li>Onitsha</li>
+              <li>Awka</li>
+              <li>Asaba</li>
+            </ul>
+          </div>
+        </div>
+
+        <section style="padding-top:26px;">
+          <div class="gallery-grid">
+            <div class="card" style="overflow:hidden;position:relative;min-height:390px;">
+              <img src="icons/banner-2.png" alt="Dispatch rider service" style="width:100%;height:390px;object-fit:cover;">
+              <div class="video-overlay">
+                <strong>Nearby route coverage</strong>
+                <span>Fast movement within Owerri and nearby communities for shops, homes and businesses.</span>
+              </div>
+            </div>
+
+            <div class="card" style="overflow:hidden;position:relative;min-height:390px;">
+              <img src="icons/banner-3.png" alt="Package delivery support" style="width:100%;height:390px;object-fit:cover;">
+              <div class="video-overlay">
+                <strong>Extended logistics support</strong>
+                <span>Useful for vendors and businesses that need wider reach beyond Owerri town proper.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen" id="screen-estimator">
+        <div class="section-head center">
+          <h2>Smart Delivery Estimator</h2>
+          <p>Get a quick estimated price based on service type, package size, urgency and route zone.</p>
+        </div>
+
+        <div class="estimator-grid">
+          <div class="estimator-card">
+            <form id="estimatorForm">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="serviceType">Service Type</label>
+                  <select id="serviceType" required>
+                    <option value="parcel">Parcel Delivery</option>
+                    <option value="document">Document Delivery</option>
+                    <option value="food">Food Delivery</option>
+                    <option value="errand">Errand Service</option>
+                    <option value="business">Business Dispatch</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="urgency">Urgency</label>
+                  <select id="urgency" required>
+                    <option value="normal">Normal</option>
+                    <option value="urgent">Urgent</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="packageSize">Package Size</label>
+                  <select id="packageSize" required>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="pickupZone">Pickup Zone</label>
+                  <select id="pickupZone" required></select>
+                </div>
+
+                <div class="field full">
+                  <label for="pickupArea">Pickup Area</label>
+                  <select id="pickupArea" required></select>
+                </div>
+
+                <div class="field">
+                  <label for="dropoffZone">Drop-off Zone</label>
+                  <select id="dropoffZone" required></select>
+                </div>
+
+                <div class="field full">
+                  <label for="dropoffArea">Drop-off Area</label>
+                  <select id="dropoffArea" required></select>
+                </div>
+
+                <div class="field full">
+                  <label for="estimateNote">Order Details</label>
+                  <textarea id="estimateNote" placeholder="Enter item details, timing or special instruction"></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-top">
+              <div>
+                <h3>Estimated Price</h3>
+                <p>Quick pricing preview based on selected route and service options.</p>
+              </div>
+              <div class="price-figure">
+                <strong id="estimatePrice">₦1,500</strong>
+                <span>Estimate</span>
+              </div>
+            </div>
+
+            <div id="availabilityStatus" class="availability ok">✅ Available</div>
+
+            <div class="summary-list">
+              <div class="summary-item">
+                <span>Service</span>
+                <strong id="summaryService">Parcel Delivery</strong>
+              </div>
+
+              <div class="summary-item">
+                <span>Pickup</span>
+                <strong id="summaryPickup">Owerri Town</strong>
+              </div>
+
+              <div class="summary-item">
+                <span>Drop-off</span>
+                <strong id="summaryDropoff">Owerri Town</strong>
+              </div>
+
+              <div class="summary-item">
+                <span>Urgency</span>
+                <strong id="summaryUrgency">Normal</strong>
+              </div>
+
+              <div class="summary-item">
+                <span>Package</span>
+                <strong id="summaryPackage">Small</strong>
+              </div>
+            </div>
+
+            <p class="summary-note">
+              Final price may depend on route, item type, timing and waiting conditions.
+            </p>
+
+            <div style="display:grid; gap:12px;">
+              <button type="button" id="sendEstimateBtn" class="btn btn-primary btn-block">Send Estimate to WhatsApp</button>
+              <button type="button" id="viewRouteBtn" class="btn btn-soft btn-block">View Route on Map</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-contact">
+        <div class="section-head center">
+          <h2>Why Choose CEETIFY Logistics?</h2>
+          <p>Get a free quote and experience the CEETIFY Logistics difference.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3 style="margin:0 0 10px;color:var(--primary);">Contact</h3>
+            <p style="margin:0;color:var(--muted);line-height:1.8;">
+              Reach us directly for delivery requests, enquiries and support.
+            </p>
+
+            <div class="contact-list">
+              <div class="contact-item">
+                <small>Address</small>
+                <strong>Behind NEPA Office, Irete Market, Owerri, Imo State</strong>
+              </div>
+
+              <div class="contact-item">
+                <small>WhatsApp</small>
+                <a href="https://wa.me/2348064934480" target="_blank" rel="noopener">0806 493 4480</a>
+              </div>
+
+              <div class="contact-item">
+                <small>Call</small>
+                <a href="tel:+2347060770401">0706 077 0401</a>
+              </div>
+
+              <div class="contact-item">
+                <small>Email</small>
+                <a href="mailto:ceetify@gmail.com">ceetify@gmail.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <h3 style="margin:0 0 10px;color:var(--primary);">Quick Quote</h3>
+            <p style="margin:0 0 16px;color:var(--muted);line-height:1.8;">
+              Send us your details and continue directly on WhatsApp.
+            </p>
+
+            <form id="quickQuoteForm" class="form-grid">
+              <div class="field">
+                <label for="quickName">Name</label>
+                <input id="quickName" type="text" placeholder="Enter your name" required />
+              </div>
+
+              <div class="field">
+                <label for="quickEmail">Email</label>
+                <input id="quickEmail" type="email" placeholder="Enter your email" required />
+              </div>
+
+              <div class="field full">
+                <button type="submit" class="btn btn-dark btn-block">Get Free Quote</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <section style="padding-top:26px;">
+          <div class="testimonials-grid" style="margin-bottom:22px;">
+            <article class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p>“Fast response, smooth delivery process and reliable rider support for our customer orders.”</p>
+              <strong>Amaka E.</strong>
+              <span>Fashion vendor</span>
+            </article>
+
+            <article class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p>“I placed my request quickly and got immediate response through WhatsApp. Very easy process.”</p>
+              <strong>Kingsley O.</strong>
+              <span>Business owner</span>
+            </article>
+
+            <article class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p>“Professional service and a cleaner booking experience that works well for online selling.”</p>
+              <strong>Chinelo A.</strong>
+              <span>Online seller</span>
+            </article>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-grid">
+              <div class="faq-item active">
+                <button class="faq-btn" type="button">
+                  <span>How do I place an order?</span>
+                  <span>+</span>
+                </button>
+                <div class="faq-answer">
+                  Use the order button or estimator and continue directly on WhatsApp with your request details.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-btn" type="button">
+                  <span>Do you handle business deliveries?</span>
+                  <span>+</span>
+                </button>
+                <div class="faq-answer">
+                  Yes. We support stores, vendors, restaurants, pharmacies, boutiques and online sellers.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-btn" type="button">
+                  <span>Can I partner with Ceetify Logistics?</span>
+                  <span>+</span>
+                </button>
+                <div class="faq-answer">
+                  Yes. Use the partnership contact option to discuss long-term dispatch and logistics support.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-btn" type="button">
+                  <span>Is the estimator final?</span>
+                  <span>+</span>
+                </button>
+                <div class="faq-answer">
+                  It is a quick estimate. Final pricing may depend on route, item details and delivery conditions.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="footer-note">
+          <p>© <span id="year"></span> Ceetify Logistics. All rights reserved.</p>
+          <button type="button" class="btn btn-primary open-order-form">Order a Ride Now</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="modal" id="orderModal" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="orderFormTitle">
+      <div class="sheet-head">
+        <h3 id="orderFormTitle">Delivery Order</h3>
+        <button type="button" class="close-btn" id="closeOrderModal" aria-label="Close form">×</button>
+      </div>
+
+      <div class="sheet-body">
+        <form id="deliveryForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="fullName">Full Name</label>
+              <input id="fullName" type="text" placeholder="Enter your full name" required />
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone Number</label>
+              <input id="phone" type="tel" placeholder="Enter your phone number" required />
+            </div>
+
+            <div class="field">
+              <label for="pickupLocation">Pickup Location</label>
+              <input id="pickupLocation" type="text" placeholder="Enter pickup location" required />
+            </div>
+
+            <div class="field">
+              <label for="dropoffLocation">Drop-off Location</label>
+              <input id="dropoffLocation" type="text" placeholder="Enter drop-off location" required />
+            </div>
+
+            <div class="field">
+              <label for="itemType">Item Type</label>
+              <select id="itemType" required>
+                <option value="">Select item type</option>
+                <option>Parcel</option>
+                <option>Document</option>
+                <option>Food</option>
+                <option>Customer Order</option>
+                <option>Package</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="deliveryType">Delivery Type</label>
+              <select id="deliveryType" required>
+                <option value="">Select delivery type</option>
+                <option>Normal Delivery</option>
+                <option>Urgent Delivery</option>
+                <option>Business Dispatch</option>
+                <option>Errand Service</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="details">Details</label>
+              <textarea id="details" placeholder="Enter delivery details"></textarea>
+            </div>
+
+            <div class="field full">
+              <button type="submit" class="btn btn-primary btn-block">Submit to WhatsApp</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const whatsappNumber = "2348064934480";
+
+      const navButtons = document.querySelectorAll(".nav-btn");
+      const screens = document.querySelectorAll(".screen");
+      const goButtons = document.querySelectorAll("[data-go]");
+
+      function showScreen(screenName) {
+        screens.forEach((screen) => {
+          screen.classList.toggle("active", screen.id === `screen-${screenName}`);
+        });
+
+        navButtons.forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.screen === screenName);
+        });
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      navButtons.forEach((btn) => {
+        btn.addEventListener("click", () => showScreen(btn.dataset.screen));
+      });
+
+      goButtons.forEach((btn) => {
+        btn.addEventListener("click", () => showScreen(btn.dataset.go));
+      });
+
+      const sliderImages = [
+        {
+          src: "icons/advert-photo.png",
+          title: "Fast delivery service",
+          text: "Pickup, dispatch and delivery support."
+        },
+        {
+          src: "icons/banner-2.png",
+          title: "Rider dispatch support",
+          text: "Reliable rider service for businesses and individuals."
+        },
+        {
+          src: "icons/banner-3.png",
+          title: "Store and vendor deliveries",
+          text: "Business dispatch and customer order fulfillment."
+        },
+        {
+          src: "icons/banner-4.png",
+          title: "Trusted logistics support",
+          text: "Fast response and smooth delivery flow."
+        },
+        {
+          src: "icons/banner-5.png",
+          title: "Door-to-door delivery",
+          text: "Secure handling for parcels and packages."
+        }
+      ];
+
+      const sliderTrack = document.getElementById("sliderTrack");
+      const sliderDots = document.getElementById("sliderDots");
+      let currentSlide = 0;
+      let sliderInterval = null;
+
+      function renderSlider() {
+        if (!sliderTrack || !sliderDots) return;
+        sliderTrack.innerHTML = "";
+        sliderDots.innerHTML = "";
+
+        sliderImages.forEach((item, index) => {
+          const slide = document.createElement("div");
+          slide.className = "slide";
+          slide.innerHTML = `
+            <img src="${item.src}" alt="${item.title}">
+            <div class="slide-copy">
+              <h4>${item.title}</h4>
+              <p>${item.text}</p>
+            </div>
+          `;
+          sliderTrack.appendChild(slide);
+
+          const dot = document.createElement("button");
+          dot.className = "dot" + (index === 0 ? " active" : "");
+          dot.type = "button";
+          dot.addEventListener("click", () => {
+            currentSlide = index;
+            updateSlider();
+            restartSlider();
+          });
+          sliderDots.appendChild(dot);
+        });
+
+        updateSlider();
+      }
+
+      function updateSlider() {
+        if (!sliderTrack || !sliderDots) return;
+        sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+        [...sliderDots.children].forEach((dot, index) => {
+          dot.classList.toggle("active", index === currentSlide);
+        });
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % sliderImages.length;
+        updateSlider();
+      }
+
+      function startSlider() {
+        sliderInterval = setInterval(nextSlide, 2600);
+      }
+
+      function restartSlider() {
+        clearInterval(sliderInterval);
+        startSlider();
+      }
+
+      renderSlider();
+      startSlider();
+
+      const orderModal = document.getElementById("orderModal");
+      const openButtons = document.querySelectorAll(".open-order-form");
+      const closeOrderModal = document.getElementById("closeOrderModal");
+      const deliveryForm = document.getElementById("deliveryForm");
+
+      function openModal() {
+        if (!orderModal) return;
+        orderModal.classList.add("active");
+        orderModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        if (!orderModal) return;
+        orderModal.classList.remove("active");
+        orderModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
+
+      openButtons.forEach((button) => button.addEventListener("click", openModal));
+      if (closeOrderModal) closeOrderModal.addEventListener("click", closeModal);
+
+      if (orderModal) {
+        orderModal.addEventListener("click", (e) => {
+          if (e.target === orderModal) closeModal();
+        });
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && orderModal && orderModal.classList.contains("active")) {
+          closeModal();
+        }
+      });
+
+      if (deliveryForm) {
+        deliveryForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const fullName = document.getElementById("fullName")?.value.trim() || "";
+          const phone = document.getElementById("phone")?.value.trim() || "";
+          const pickupLocation = document.getElementById("pickupLocation")?.value.trim() || "";
+          const dropoffLocation = document.getElementById("dropoffLocation")?.value.trim() || "";
+          const itemType = document.getElementById("itemType")?.value.trim() || "";
+          const deliveryType = document.getElementById("deliveryType")?.value.trim() || "";
+          const details = document.getElementById("details")?.value.trim() || "";
+
+          const message = `
+Hello Ceetify Logistics,
+
+I want to place a delivery order.
+
+Full Name: ${fullName}
+Phone Number: ${phone}
+Pickup Location: ${pickupLocation}
+Drop-off Location: ${dropoffLocation}
+Item Type: ${itemType}
+Delivery Type: ${deliveryType}
+Details: ${details || "None"}
+          `.trim();
+
+          window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+        });
+      }
+
+      const quickQuoteForm = document.getElementById("quickQuoteForm");
+      if (quickQuoteForm) {
+        quickQuoteForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = document.getElementById("quickName")?.value.trim() || "";
+          const email = document.getElementById("quickEmail")?.value.trim() || "";
+
+          const message = `
+Hello Ceetify Logistics,
+
+I want a free quote.
+
+Name: ${name}
+Email: ${email}
+          `.trim();
+
+          window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+        });
+      }
+
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      const animatedCards = document.querySelectorAll(".feature-card, .service-card, .testimonial, .coverage-card");
+      if (animatedCards.length) {
+        const animObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              animObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        animatedCards.forEach((card) => animObserver.observe(card));
+      }
+
+      document.querySelectorAll(".faq-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const item = btn.parentElement;
+          const isActive = item.classList.contains("active");
+          document.querySelectorAll(".faq-item").forEach((faq) => faq.classList.remove("active"));
+          if (!isActive) item.classList.add("active");
+        });
+      });
+
+      const zones = {
+        owerri_town: {
+          label: "Owerri Town",
+          level: 1,
+          price: 0,
+          areas: ["Ikenegbu","Aladinma","World Bank","Works Layout","New Owerri","IMSU","MCC","Douglas","Wetheral","GRA","Housing Estate","Prefab"]
+        },
+        nearby_areas: {
+          label: "Nearby Areas",
+          level: 2,
+          price: 700,
+          areas: ["Irete","Orogwe","Umuguma","Nekede","Ihiagwa","Avu","Obinze","Ohii","Naze","Egbu","Emekuku","Orji","Akwakuma","Amakohia","Ubomiri"]
+        },
+        extended_environs: {
+          label: "Extended Environs",
+          level: 3,
+          price: 1500,
+          areas: ["Mbaise","Mbaitoli","Ifakala","Orodo","Afara","Ogwa","Ngor Okpala","Ikeduru","Amaimo","Obowo","Okigwe","Oguta","Mgbidi","Awo-Omamma"]
+        },
+        intercity: {
+          label: "Intercity",
+          level: 4,
+          price: 3000,
+          areas: ["Aba","Umuahia","Port Harcourt","Onitsha","Awka","Asaba"]
+        }
+      };
+
+      const servicePrices = {
+        parcel: 1500,
+        document: 1200,
+        food: 1800,
+        errand: 2000,
+        business: 2500
+      };
+
+      const urgencyPrices = { normal: 0, urgent: 800 };
+      const packagePrices = { small: 0, medium: 500, large: 1000 };
+
+      const serviceType = document.getElementById("serviceType");
+      const urgency = document.getElementById("urgency");
+      const packageSize = document.getElementById("packageSize");
+      const pickupZone = document.getElementById("pickupZone");
+      const dropoffZone = document.getElementById("dropoffZone");
+      const pickupArea = document.getElementById("pickupArea");
+      const dropoffArea = document.getElementById("dropoffArea");
+      const estimateNote = document.getElementById("estimateNote");
+
+      const estimatePrice = document.getElementById("estimatePrice");
+      const summaryService = document.getElementById("summaryService");
+      const summaryPickup = document.getElementById("summaryPickup");
+      const summaryDropoff = document.getElementById("summaryDropoff");
+      const summaryUrgency = document.getElementById("summaryUrgency");
+      const summaryPackage = document.getElementById("summaryPackage");
+      const sendEstimateBtn = document.getElementById("sendEstimateBtn");
+      const viewRouteBtn = document.getElementById("viewRouteBtn");
+      const availabilityEl = document.getElementById("availabilityStatus");
+
+      function formatCurrency(value) {
+        return "₦" + Number(value).toLocaleString();
+      }
+
+      function getSelectLabel(selectEl) {
+        return selectEl?.options?.[selectEl.selectedIndex]?.text || "";
+      }
+
+      function fillZoneSelect(selectEl) {
+        if (!selectEl) return;
+        selectEl.innerHTML = "";
+        Object.entries(zones).forEach(([key, zone]) => {
+          const option = document.createElement("option");
+          option.value = key;
+          option.textContent = zone.label;
+          selectEl.appendChild(option);
+        });
+      }
+
+      function fillAreaSelect(zoneKey, selectEl) {
+        if (!selectEl || !zones[zoneKey]) return;
+        selectEl.innerHTML = "";
+        zones[zoneKey].areas.forEach((area) => {
+          const option = document.createElement("option");
+          option.value = area;
+          option.textContent = area;
+          selectEl.appendChild(option);
+        });
+      }
+
+      if (pickupZone && dropoffZone && pickupArea && dropoffArea) {
+        fillZoneSelect(pickupZone);
+        fillZoneSelect(dropoffZone);
+        fillAreaSelect(pickupZone.value, pickupArea);
+        fillAreaSelect(dropoffZone.value, dropoffArea);
+
+        pickupZone.addEventListener("change", () => {
+          fillAreaSelect(pickupZone.value, pickupArea);
+          calculateEstimate();
+        });
+
+        dropoffZone.addEventListener("change", () => {
+          fillAreaSelect(dropoffZone.value, dropoffArea);
+          calculateEstimate();
+        });
+
+        pickupArea.addEventListener("change", calculateEstimate);
+        dropoffArea.addEventListener("change", calculateEstimate);
+      }
+
+      function calculateEstimate() {
+        if (!serviceType || !urgency || !packageSize || !pickupZone || !dropoffZone || !pickupArea || !dropoffArea) return 0;
+
+        const service = servicePrices[serviceType.value] || 0;
+        const urgencyCost = urgencyPrices[urgency.value] || 0;
+        const packageCost = packagePrices[packageSize.value] || 0;
+
+        const pZone = zones[pickupZone.value];
+        const dZone = zones[dropoffZone.value];
+        if (!pZone || !dZone) return 0;
+
+        let zoneCost = pZone.price + dZone.price;
+        let availability = "✅ Available";
+        let availabilityClass = "ok";
+
+        if (pZone.level === dZone.level) {
+          zoneCost += 0;
+        } else if (Math.abs(pZone.level - dZone.level) === 1) {
+          zoneCost += 500;
+        } else {
+          zoneCost += 1500;
+        }
+
+        if (dZone.level <= 2) {
+          availability = "✅ Available";
+          availabilityClass = "ok";
+        } else if (dZone.level === 3) {
+          availability = "⚠️ Limited (confirm on WhatsApp)";
+          availabilityClass = "warn";
+        } else {
+          availability = "❌ Contact before booking";
+          availabilityClass = "bad";
+        }
+
+        const total = service + urgencyCost + packageCost + zoneCost;
+
+        if (estimatePrice) estimatePrice.textContent = formatCurrency(total);
+        if (summaryService) summaryService.textContent = getSelectLabel(serviceType);
+        if (summaryPickup) summaryPickup.textContent = `${pZone.label} - ${pickupArea.value}`;
+        if (summaryDropoff) summaryDropoff.textContent = `${dZone.label} - ${dropoffArea.value}`;
+        if (summaryUrgency) summaryUrgency.textContent = getSelectLabel(urgency);
+        if (summaryPackage) summaryPackage.textContent = getSelectLabel(packageSize);
+
+        if (availabilityEl) {
+          availabilityEl.textContent = availability;
+          availabilityEl.className = "availability " + availabilityClass;
+        }
+
+        return total;
+      }
+
+      [serviceType, urgency, packageSize].forEach((el) => {
+        if (el) el.addEventListener("change", calculateEstimate);
+      });
+
+      calculateEstimate();
+
+      if (sendEstimateBtn) {
+        sendEstimateBtn.addEventListener("click", () => {
+          const total = calculateEstimate();
+
+          const msg = `
+Hello Ceetify Logistics,
+
+I need a delivery estimate.
+
+Service Type: ${getSelectLabel(serviceType)}
+Pickup Zone: ${getSelectLabel(pickupZone)}
+Pickup Area: ${getSelectLabel(pickupArea)}
+Drop-off Zone: ${getSelectLabel(dropoffZone)}
+Drop-off Area: ${getSelectLabel(dropoffArea)}
+Urgency: ${getSelectLabel(urgency)}
+Package Size: ${getSelectLabel(packageSize)}
+Order Details: ${estimateNote?.value.trim() || "None"}
+Estimated Price: ${formatCurrency(total)}
+          `.trim();
+
+          window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, "_blank");
+        });
+      }
+
+      if (viewRouteBtn) {
+        viewRouteBtn.addEventListener("click", () => {
+          const origin = pickupArea?.value || "";
+          const destination = dropoffArea?.value || "";
+          if (!origin || !destination) return;
+
+          const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`;
+          window.open(url, "_blank");
+        });
+      }
+    });
+  </script>
+</body>
+</html>
