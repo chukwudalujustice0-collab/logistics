@@ -13,10 +13,12 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   }
 });
 
-async function protectPage(allowedRoles = []) {
-  try {
-    document.documentElement.classList.add("auth-loading");
+window.supabaseClient = supabaseClient;
 
+async function protectPage(allowedRoles = []) {
+  document.documentElement.classList.add("auth-loading");
+
+  try {
     const { data: sessionData, error: sessionError } =
       await supabaseClient.auth.getSession();
 
@@ -35,7 +37,6 @@ async function protectPage(allowedRoles = []) {
       .maybeSingle();
 
     if (profileError) {
-      console.error("Profile error:", profileError);
       showAuthError("Profile error: " + profileError.message);
       return null;
     }
@@ -46,8 +47,8 @@ async function protectPage(allowedRoles = []) {
     }
 
     if (profile.status !== "active") {
-      showAuthError("Your account is not active. Please contact support.");
       await supabaseClient.auth.signOut();
+      showAuthError("Your account is not active. Please contact support.");
       redirectToLogin();
       return null;
     }
@@ -55,7 +56,7 @@ async function protectPage(allowedRoles = []) {
     if (allowedRoles.length && !allowedRoles.includes(profile.role)) {
       showAuthError("You are not authorized to access this page.");
       setTimeout(() => {
-        location.href = "home.html";
+        location.href = "/home.html";
       }, 1200);
       return null;
     }
@@ -72,57 +73,32 @@ async function protectPage(allowedRoles = []) {
     });
 
     document.documentElement.classList.remove("auth-loading");
-
     return { user, profile };
 
   } catch (error) {
-    console.error(error);
     showAuthError("Authentication check failed: " + error.message);
     return null;
   }
 }
 
 function redirectToLogin() {
-  const next = encodeURIComponent(location.pathname.split("/").pop() || "home.html");
+  const currentPage = location.pathname.split("/").pop() || "home.html";
+  const next = encodeURIComponent(currentPage);
 
   setTimeout(() => {
-    location.href = `login.html?next=${next}`;
-  }, 1200);
+    location.href = `/login.html?next=${next}`;
+  }, 1000);
 }
 
 function showAuthError(message) {
   document.documentElement.classList.remove("auth-loading");
 
   document.body.innerHTML = `
-    <div style="
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      font-family:Arial,sans-serif;
-      background:#f5f8ff;
-    ">
-      <div style="
-        max-width:420px;
-        width:100%;
-        background:white;
-        border-radius:22px;
-        padding:26px;
-        text-align:center;
-        box-shadow:0 18px 50px rgba(7,31,79,.15);
-      ">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;font-family:Arial,sans-serif;background:#f5f8ff;">
+      <div style="max-width:420px;width:100%;background:white;border-radius:22px;padding:26px;text-align:center;box-shadow:0 18px 50px rgba(7,31,79,.15);">
         <h2 style="color:#0b347c;margin:0 0 10px;">Ceetify Logistics</h2>
         <p style="color:#dc1f2f;font-weight:bold;margin:0 0 14px;">${message}</p>
-        <a href="login.html" style="
-          display:inline-flex;
-          background:#0b347c;
-          color:white;
-          padding:12px 18px;
-          border-radius:999px;
-          text-decoration:none;
-          font-weight:bold;
-        ">Go to Login</a>
+        <a href="/login.html" style="display:inline-flex;background:#0b347c;color:white;padding:12px 18px;border-radius:999px;text-decoration:none;font-weight:bold;">Go to Login</a>
       </div>
     </div>
   `;
@@ -130,5 +106,5 @@ function showAuthError(message) {
 
 async function logoutUser() {
   await supabaseClient.auth.signOut();
-  location.href = "login.html";
+  location.href = "/login.html";
 }
