@@ -7,7 +7,9 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
-    detectSessionInUrl: true
+    detectSessionInUrl: true,
+    storageKey: "ceetify-logistics-auth",
+    storage: window.localStorage
   }
 });
 
@@ -82,6 +84,7 @@ async function protectPage(allowedRoles = []) {
 
 function redirectToLogin() {
   const next = encodeURIComponent(location.pathname.split("/").pop() || "home.html");
+
   setTimeout(() => {
     location.href = `login.html?next=${next}`;
   }, 1200);
