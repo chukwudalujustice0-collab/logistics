@@ -1,25 +1,30 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en" class="auth-loading">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Login | Ceetify Logistics</title>
-  <meta name="theme-color" content="#123f91" />
+  <meta name="theme-color" content="#0b347c" />
+
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
 
   <script>
     document.documentElement.classList.add("auth-loading");
   </script>
 
   <style>
+    html.auth-loading body{display:none}
     :root{
-      --blue:#123f91;
-      --blue2:#082b6f;
-      --red:#e51b34;
-      --text:#152033;
-      --muted:#727b8c;
-      --line:#edf0f5;
-      --card:#ffffff;
-      --soft:#f5f8ff;
+      --blue:#0b347c;
+      --blue2:#061d49;
+      --red:#dc1f2f;
+      --text:#101828;
+      --muted:#667085;
+      --line:#e7ecf5;
+      --card:#fff;
       --danger:#b42318;
       --success:#067647;
     }
@@ -31,15 +36,15 @@
       min-height:100vh;
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(18,63,145,.18), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(229,27,52,.13), transparent 32%),
-        linear-gradient(180deg,#f8fbff,#fff);
+        radial-gradient(circle at top left, rgba(11,52,124,.22), transparent 36%),
+        radial-gradient(circle at bottom right, rgba(220,31,47,.16), transparent 34%),
+        linear-gradient(180deg,#f8fbff,#ffffff);
       color:var(--text);
     }
 
     .page{
       min-height:100vh;
-      padding:42px 18px 28px;
+      padding:28px 16px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -47,83 +52,104 @@
 
     .card{
       width:100%;
-      max-width:430px;
-      background:var(--card);
-      border:1px solid rgba(18,63,145,.07);
-      border-radius:28px;
-      padding:34px 26px 28px;
-      box-shadow:0 24px 70px rgba(15,35,75,.14);
+      max-width:420px;
+      background:rgba(255,255,255,.94);
+      border:1px solid rgba(11,52,124,.1);
+      border-radius:30px;
+      padding:28px 22px 24px;
+      box-shadow:0 24px 70px rgba(11,52,124,.16);
+      backdrop-filter:blur(14px);
     }
 
-    .logo-wrap{
-      text-align:center;
-      margin-bottom:20px;
+    .brand{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:18px;
     }
 
     .logo{
-      width:92px;
-      height:auto;
+      width:82px;
+      height:82px;
+      border-radius:24px;
       object-fit:contain;
+      background:#fff;
+      padding:8px;
+      box-shadow:0 14px 32px rgba(11,52,124,.14);
+    }
+
+    .badge{
+      padding:7px 13px;
+      border-radius:999px;
+      background:#eef4ff;
+      color:var(--blue);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.3px;
     }
 
     h1{
       margin:0;
       text-align:center;
       color:var(--blue);
-      font-size:34px;
+      font-size:31px;
       line-height:1.1;
-      font-weight:900;
-      letter-spacing:-.8px;
+      font-weight:950;
+      letter-spacing:-.7px;
     }
 
     .subtitle{
-      margin:10px 0 28px;
+      margin:9px 0 24px;
       text-align:center;
       color:var(--muted);
-      font-size:16px;
+      font-size:14px;
       line-height:1.45;
     }
 
     label{
       display:block;
-      font-size:14px;
-      font-weight:800;
+      font-size:13px;
+      font-weight:900;
       margin:0 0 8px;
       color:#344054;
     }
 
     .field{
       position:relative;
-      margin-bottom:18px;
+      margin-bottom:15px;
     }
 
     .field input{
       width:100%;
-      height:58px;
-      border:1.5px solid #e6e9ef;
-      border-radius:17px;
-      padding:0 48px 0 18px;
-      font-size:17px;
+      height:56px;
+      border:1.5px solid #e5eaf3;
+      border-radius:18px;
+      padding:0 48px 0 16px;
+      font-size:16px;
       outline:none;
       background:#fff;
       color:var(--text);
+      transition:.2s ease;
     }
 
     .field input:focus{
       border-color:var(--blue);
-      box-shadow:0 0 0 4px rgba(18,63,145,.08);
+      box-shadow:0 0 0 4px rgba(11,52,124,.09);
     }
 
     .icon-btn{
       position:absolute;
-      right:12px;
-      top:34px;
+      right:10px;
+      top:32px;
       border:0;
-      background:transparent;
-      color:#697386;
-      font-size:20px;
+      background:#f3f6fb;
+      color:#667085;
+      font-size:17px;
       height:38px;
       width:38px;
+      border-radius:14px;
       cursor:pointer;
     }
 
@@ -132,8 +158,8 @@
       justify-content:space-between;
       align-items:center;
       gap:12px;
-      margin:2px 0 20px;
-      font-size:14px;
+      margin:2px 0 18px;
+      font-size:13px;
     }
 
     .remember{
@@ -141,36 +167,52 @@
       align-items:center;
       gap:8px;
       color:#667085;
-      font-weight:700;
+      font-weight:800;
+      margin:0;
     }
 
     a{
       color:var(--red);
       text-decoration:none;
-      font-weight:850;
+      font-weight:900;
     }
 
     .btn{
       width:100%;
-      height:58px;
+      height:56px;
       border:0;
       border-radius:999px;
-      font-size:17px;
-      font-weight:900;
+      font-size:16px;
+      font-weight:950;
       color:#fff;
       cursor:pointer;
       display:flex;
       align-items:center;
       justify-content:center;
       gap:10px;
+      transition:.18s ease;
     }
 
-    .btn-red{background:linear-gradient(135deg,#f21d3a,#d90f28)}
-    .btn-blue{background:linear-gradient(135deg,#16499f,#082d75); margin-top:13px}
+    .btn:active{transform:scale(.985)}
+    .btn:disabled{opacity:.7;cursor:not-allowed}
 
-    .btn:disabled{
-      opacity:.7;
-      cursor:not-allowed;
+    .btn-red{
+      background:linear-gradient(135deg,#ef233c,#c8102e);
+      box-shadow:0 14px 26px rgba(220,31,47,.22);
+    }
+
+    .btn-blue{
+      background:linear-gradient(135deg,#0d47a1,#061d49);
+      margin-top:12px;
+      box-shadow:0 14px 26px rgba(11,52,124,.22);
+    }
+
+    .btn-light{
+      background:#eef4ff;
+      color:var(--blue);
+      margin-top:10px;
+      box-shadow:none;
+      border:1px solid #dbe8ff;
     }
 
     .divider{
@@ -178,9 +220,9 @@
       align-items:center;
       gap:12px;
       color:#98a2b3;
-      font-size:13px;
-      font-weight:800;
-      margin:18px 0 4px;
+      font-size:12px;
+      font-weight:900;
+      margin:18px 0 6px;
     }
 
     .divider:before,.divider:after{
@@ -191,23 +233,24 @@
     }
 
     .note{
-      margin:16px 0 0;
-      padding:13px 14px;
-      border-radius:16px;
-      background:#f6f8ff;
+      margin:15px 0 0;
+      padding:12px 13px;
+      border-radius:17px;
+      background:#f8faff;
       color:#667085;
-      font-size:14px;
+      font-size:13px;
       line-height:1.45;
+      border:1px solid #eef2f8;
     }
 
     .message{
       display:none;
-      margin:16px 0 0;
-      padding:14px;
-      border-radius:16px;
-      font-size:14px;
+      margin:14px 0 0;
+      padding:13px;
+      border-radius:17px;
+      font-size:13px;
       line-height:1.5;
-      font-weight:700;
+      font-weight:800;
     }
 
     .message.error{
@@ -224,19 +267,44 @@
       border:1px solid #abefc6;
     }
 
+    .actions-after-login{
+      display:none;
+      margin-top:14px;
+      padding:14px;
+      border-radius:20px;
+      background:#f8faff;
+      border:1px solid #edf2fb;
+    }
+
+    .actions-after-login.show{display:block}
+
+    .mini-title{
+      margin:0 0 8px;
+      color:var(--blue);
+      font-size:14px;
+      font-weight:950;
+    }
+
+    .mini-text{
+      margin:0 0 12px;
+      color:#667085;
+      font-size:13px;
+      line-height:1.45;
+    }
+
     .links{
       display:flex;
       justify-content:space-between;
-      margin-top:24px;
-      font-size:15px;
+      margin-top:22px;
+      font-size:14px;
     }
 
     .footer{
-      margin-top:28px;
+      margin-top:24px;
       text-align:center;
       color:#667085;
-      font-size:15px;
-      line-height:1.4;
+      font-size:13px;
+      line-height:1.45;
     }
 
     .loader{
@@ -254,8 +322,9 @@
     @keyframes spin{to{transform:rotate(360deg)}}
 
     @media(max-width:380px){
-      .card{padding:30px 20px 24px;border-radius:24px}
-      h1{font-size:30px}
+      .card{padding:24px 18px;border-radius:26px}
+      h1{font-size:28px}
+      .logo{width:74px;height:74px}
     }
   </style>
 </head>
@@ -263,12 +332,13 @@
 <body>
   <main class="page">
     <section class="card">
-      <div class="logo-wrap">
-        <img src="icons/ceetify-logistics-logo.png" class="logo" alt="Ceetify Logistics Logo" />
+      <div class="brand">
+        <img src="icons/logo.png" class="logo" alt="Ceetify Logistics Logo" />
+        <div class="badge">CEETIFY LOGISTICS</div>
       </div>
 
       <h1>Welcome Back</h1>
-      <p class="subtitle">Login to continue your delivery booking.</p>
+      <p class="subtitle">Login to book, track and manage your deliveries.</p>
 
       <form id="loginForm">
         <div class="field">
@@ -287,7 +357,7 @@
             <input type="checkbox" id="rememberMe" checked />
             Remember me
           </label>
-          <a href="forgot-password.html">Forgot?</a>
+          <a href="forgot-password.html">Forgot password?</a>
         </div>
 
         <button class="btn btn-red" id="loginBtn" type="submit">
@@ -296,14 +366,29 @@
         </button>
       </form>
 
+      <div class="actions-after-login" id="afterLoginBox">
+        <p class="mini-title">Secure this device</p>
+        <p class="mini-text">Enable biometric/passkey login after password login, then next time you can login with fingerprint, face unlock or device PIN.</p>
+
+        <button class="btn btn-blue" id="enablePasskeyBtn" type="button">
+          <span class="loader"></span>
+          <span>Enable Biometric Login</span>
+        </button>
+
+        <button class="btn btn-light" id="continueBtn" type="button">
+          Continue to Dashboard
+        </button>
+      </div>
+
       <div class="divider">OR</div>
 
       <button class="btn btn-blue" id="biometricBtn" type="button">
-        Login with Biometric / Passkey
+        <span class="loader"></span>
+        <span>Login with Biometric / Passkey</span>
       </button>
 
       <div class="note">
-        Biometric login works after passkey setup has been added to your account.
+        Biometric login uses your saved passkey. Login with password first to enable it on this device.
       </div>
 
       <div id="message" class="message"></div>
@@ -322,24 +407,39 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script>
+  <script type="module">
+    import {
+      startRegistration,
+      startAuthentication
+    } from "https://esm.sh/@simplewebauthn/browser@10.0.0";
+
     const SUPABASE_URL = "https://vjopoldebuwcjjezqfum.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqb3BvbGRlYnV3Y2pqZXpxZnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc3OTUxNzcsImV4cCI6MjA5MzM3MTE3N30.EPDxfnsj50dryIt-aJsyqZynVTmUdS2n_fNjv1caj24";
 
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    const FUNCTIONS_BASE = `${SUPABASE_URL}/functions/v1`;
+
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: {
         persistSession: true,
         autoRefreshToken: true,
-        detectSessionInUrl: true
+        detectSessionInUrl: true,
+        storageKey: "ceetify-logistics-auth",
+        storage: window.localStorage
       }
     });
 
     const loginForm = document.getElementById("loginForm");
     const loginBtn = document.getElementById("loginBtn");
     const biometricBtn = document.getElementById("biometricBtn");
+    const enablePasskeyBtn = document.getElementById("enablePasskeyBtn");
+    const continueBtn = document.getElementById("continueBtn");
+    const afterLoginBox = document.getElementById("afterLoginBox");
     const messageBox = document.getElementById("message");
     const togglePassword = document.getElementById("togglePassword");
     const passwordInput = document.getElementById("password");
+    const emailInput = document.getElementById("email");
+
+    let activeSession = null;
 
     function getNextPage(){
       const params = new URLSearchParams(location.search);
@@ -361,26 +461,67 @@
       button.classList.toggle("loading", loading);
     }
 
+    async function readJsonResponse(response){
+      const text = await response.text();
+      try{
+        return JSON.parse(text);
+      }catch{
+        return {
+          success:false,
+          error:text || "Invalid server response."
+        };
+      }
+    }
+
+    async function callFunction(name, body = {}, token = null){
+      const headers = {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_ANON_KEY
+      };
+
+      if(token){
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${FUNCTIONS_BASE}/${name}`, {
+        method:"POST",
+        headers,
+        body:JSON.stringify(body)
+      });
+
+      const result = await readJsonResponse(response);
+
+      if(!response.ok || !result.success){
+        throw new Error(result.error || result.details || "Request failed.");
+      }
+
+      return result;
+    }
+
     togglePassword.addEventListener("click", () => {
       const isPassword = passwordInput.type === "password";
       passwordInput.type = isPassword ? "text" : "password";
       togglePassword.textContent = isPassword ? "🙈" : "👁";
     });
 
-    async function checkExistingSession(){
+    continueBtn.addEventListener("click", async () => {
       const { data } = await supabaseClient.auth.getSession();
-      if(data?.session){
-        location.href = getNextPage();
+
+      if(!data?.session){
+        showMessage("Session is not ready. Please login again.");
+        return;
       }
-    }
+
+      location.href = getNextPage();
+    });
 
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       clearMessage();
       setLoading(loginBtn, true);
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+      const email = emailInput.value.trim().toLowerCase();
+      const password = passwordInput.value;
 
       const { data, error } = await supabaseClient.auth.signInWithPassword({
         email,
@@ -399,11 +540,62 @@
         return;
       }
 
+      activeSession = data.session;
+
+      await supabaseClient.auth.setSession({
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token
+      });
+
+      await supabaseClient.auth.getSession();
+
+      afterLoginBox.classList.add("show");
       showMessage("Login successful. Redirecting...", "success");
 
       setTimeout(() => {
         location.href = getNextPage();
-      }, 600);
+      }, 1000);
+    });
+
+    enablePasskeyBtn.addEventListener("click", async () => {
+      clearMessage();
+
+      if(!window.PublicKeyCredential){
+        showMessage("Biometric/passkey is not supported on this device or browser.");
+        return;
+      }
+
+      const { data } = await supabaseClient.auth.getSession();
+      const session = data?.session || activeSession;
+
+      if(!session?.access_token){
+        showMessage("Please login with password first before enabling biometric login.");
+        return;
+      }
+
+      try{
+        setLoading(enablePasskeyBtn, true);
+
+        const optionsResult = await callFunction(
+          "passkey-register-options",
+          {},
+          session.access_token
+        );
+
+        const credential = await startRegistration(optionsResult.options);
+
+        const verifyResult = await callFunction(
+          "passkey-register-verify",
+          { credential },
+          session.access_token
+        );
+
+        showMessage(verifyResult.message || "Biometric login enabled successfully.", "success");
+      }catch(err){
+        showMessage(err.message || "Could not enable biometric login.");
+      }finally{
+        setLoading(enablePasskeyBtn, false);
+      }
     });
 
     biometricBtn.addEventListener("click", async () => {
@@ -414,25 +606,78 @@
         return;
       }
 
-      showMessage("Passkey backend is required before biometric login can be activated.", "error");
+      const email = emailInput.value.trim().toLowerCase();
 
-      /*
-        REAL PASSKEY FLOW TO CONNECT LATER:
+      if(!email){
+        showMessage("Enter your email first, then tap biometric login.");
+        emailInput.focus();
+        return;
+      }
 
-        1. Call your backend:
-           GET /api/passkey/login-options
+      try{
+        setLoading(biometricBtn, true);
 
-        2. Use:
-           const credential = await navigator.credentials.get({ publicKey: options });
+        const optionsResult = await callFunction("passkey-login-options", {
+          email
+        });
 
-        3. Send credential back:
-           POST /api/passkey/verify-login
+        const credential = await startAuthentication(optionsResult.options);
 
-        4. Backend verifies passkey and creates/returns Supabase session.
-      */
+        const verifyResult = await callFunction("passkey-login-verify", {
+          email,
+          credential
+        });
+
+        if(!verifyResult.token_hash){
+          throw new Error("Biometric verified, but login token was not returned.");
+        }
+
+        const { data, error } = await supabaseClient.auth.verifyOtp({
+          type: "magiclink",
+          token_hash: verifyResult.token_hash
+        });
+
+        if(error || !data?.session){
+          throw new Error(error?.message || "Could not create login session.");
+        }
+
+        await supabaseClient.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token
+        });
+
+        await supabaseClient.auth.getSession();
+
+        showMessage("Biometric login successful. Redirecting...", "success");
+
+        setTimeout(() => {
+          location.href = getNextPage();
+        }, 650);
+
+      }catch(err){
+        showMessage(err.message || "Biometric login failed. Try password login.");
+      }finally{
+        setLoading(biometricBtn, false);
+      }
     });
 
+    async function checkExistingSession(){
+      const { data, error } = await supabaseClient.auth.getSession();
+
+      if(error){
+        console.error(error);
+      }
+
+      document.documentElement.classList.remove("auth-loading");
+    }
+
     checkExistingSession();
+
+    if("serviceWorker" in navigator){
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js").catch(console.error);
+      });
+    }
   </script>
 </body>
 </html>
