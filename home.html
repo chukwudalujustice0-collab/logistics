@@ -1,1 +1,583 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en" class="auth-loading">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>Home | Ceetify Logistics</title>
+  <meta name="theme-color" content="#0b347c" />
+
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+
+  <script>
+    document.documentElement.classList.add("auth-loading");
+  </script>
+
+  <style>
+    html.auth-loading body{
+      display:none;
+    }
+
+    :root{
+      --red:#dc1f2f;
+      --blue:#0b347c;
+      --dark:#071f4f;
+      --white:#ffffff;
+      --soft:#f5f8ff;
+      --text:#101828;
+      --muted:#667085;
+      --line:#e6ebf2;
+      --shadow:0 18px 45px rgba(7,31,79,.14);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:#f5f8ff;
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .app{
+      min-height:100vh;
+      padding-bottom:84px;
+    }
+
+    .top{
+      background:linear-gradient(135deg,var(--dark),var(--blue));
+      color:white;
+      padding:18px 18px 28px;
+      border-bottom-left-radius:28px;
+      border-bottom-right-radius:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .top-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .brand img{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      background:white;
+      object-fit:contain;
+    }
+
+    .brand b{
+      display:block;
+      font-size:17px;
+    }
+
+    .brand small{
+      display:block;
+      color:#dce7ff;
+      font-size:12px;
+      margin-top:2px;
+    }
+
+    .icon-btn{
+      border:0;
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:rgba(255,255,255,.14);
+      color:white;
+      font-size:18px;
+      cursor:pointer;
+    }
+
+    .welcome{
+      margin-top:22px;
+    }
+
+    .welcome h1{
+      margin:0;
+      font-size:28px;
+      line-height:1.1;
+    }
+
+    .welcome p{
+      margin:8px 0 0;
+      color:#dce7ff;
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    .container{
+      width:min(980px,92%);
+      margin:auto;
+    }
+
+    .quick{
+      margin-top:-18px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .quick a,
+    .quick button{
+      border:0;
+      min-height:105px;
+      border-radius:22px;
+      padding:18px;
+      background:white;
+      box-shadow:var(--shadow);
+      cursor:pointer;
+      text-align:left;
+    }
+
+    .quick b{
+      display:block;
+      color:var(--blue);
+      font-size:17px;
+      margin-bottom:6px;
+    }
+
+    .quick span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .section{
+      margin-top:24px;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:12px;
+    }
+
+    .section-title h2{
+      font-size:19px;
+      margin:0;
+      color:var(--dark);
+    }
+
+    .section-title a{
+      color:var(--red);
+      font-size:13px;
+      font-weight:bold;
+    }
+
+    .panel{
+      background:white;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:0 10px 26px rgba(16,24,40,.05);
+    }
+
+    .status-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .status-item{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:14px;
+      background:var(--soft);
+      border-radius:18px;
+    }
+
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:var(--red);
+      margin-top:4px;
+      flex:none;
+    }
+
+    .status-item b{
+      display:block;
+      color:var(--blue);
+      font-size:14px;
+    }
+
+    .status-item span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+      margin-top:3px;
+    }
+
+    .promo{
+      background:linear-gradient(135deg,#ffffff,#eef4ff);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .promo h3{
+      margin:0;
+      color:var(--dark);
+      font-size:18px;
+    }
+
+    .promo p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .btn{
+      border:0;
+      border-radius:999px;
+      padding:12px 16px;
+      font-weight:900;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .btn-red{
+      background:var(--red);
+      color:white;
+    }
+
+    .btn-blue{
+      background:var(--blue);
+      color:white;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      background:white;
+      border-top:1px solid var(--line);
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      padding:8px 6px;
+      z-index:50;
+    }
+
+    .bottom-nav a{
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:bold;
+      padding:8px 4px;
+    }
+
+    .bottom-nav a.active{
+      color:var(--red);
+    }
+
+    .bottom-nav span{
+      display:block;
+      font-size:19px;
+      margin-bottom:3px;
+    }
+
+    .pwa-modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      background:rgba(7,31,79,.68);
+      backdrop-filter:blur(8px);
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .pwa-modal.show{
+      display:flex;
+    }
+
+    .pwa-card{
+      width:100%;
+      max-width:360px;
+      background:white;
+      border-radius:26px;
+      padding:24px;
+      text-align:center;
+      box-shadow:0 25px 70px rgba(0,0,0,.25);
+    }
+
+    .pwa-card img{
+      width:82px;
+      height:82px;
+      border-radius:22px;
+      object-fit:contain;
+      margin-bottom:12px;
+    }
+
+    .pwa-card h2{
+      margin:8px 0;
+      color:var(--blue);
+    }
+
+    .pwa-card p{
+      margin:0 0 12px;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    .pwa-card button{
+      width:100%;
+      border:0;
+      border-radius:999px;
+      padding:13px;
+      margin-top:10px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .pwa-card .light{
+      background:#eef3ff;
+      color:var(--blue);
+    }
+
+    @media(max-width:600px){
+      .quick{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .welcome h1{
+        font-size:25px;
+      }
+
+      .promo{
+        display:block;
+      }
+
+      .promo .btn{
+        margin-top:14px;
+        width:100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="top">
+    <div class="top-row">
+      <div class="brand">
+        <img src="/icons/icon-192.png" alt="Ceetify Logistics">
+        <div>
+          <b>Ceetify Logistics</b>
+          <small data-user-email>Loading...</small>
+        </div>
+      </div>
+
+      <button class="icon-btn" onclick="logoutUser()" title="Logout">⎋</button>
+    </div>
+
+    <div class="welcome">
+      <h1>Hello, <span data-user-name>Customer</span></h1>
+      <p>Book, track and receive updates for your deliveries from one clean dashboard.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div class="quick">
+      <a href="booking.html">
+        <b>Book Delivery</b>
+        <span>Create a new pickup and delivery request.</span>
+      </a>
+
+      <a href="tracking.html">
+        <b>Track Order</b>
+        <span>Use your Tracking ID to check progress.</span>
+      </a>
+
+      <a href="notifications.html">
+        <b>Notifications</b>
+        <span>View order alerts and delivery updates.</span>
+      </a>
+
+      <button id="openInstallBtn">
+        <b>Install App</b>
+        <span>Add Ceetify Logistics to your phone.</span>
+      </button>
+    </div>
+
+    <section class="section">
+      <div class="promo">
+        <div>
+          <h3>Delivery from ₦1,500</h3>
+          <p>Send packages within Owerri, environs, nearby towns and supported interstate routes.</p>
+        </div>
+        <a class="btn btn-red" href="booking.html">Start Booking</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>Order Progress</h2>
+        <a href="tracking.html">Track now</a>
+      </div>
+
+      <div class="panel">
+        <div class="status-list">
+          <div class="status-item">
+            <div class="dot"></div>
+            <div>
+              <b>Order Accepted</b>
+              <span>Admin confirms your request and prepares dispatch.</span>
+            </div>
+          </div>
+
+          <div class="status-item">
+            <div class="dot"></div>
+            <div>
+              <b>Rider Assigned</b>
+              <span>You receive rider name, phone number and ride number.</span>
+            </div>
+          </div>
+
+          <div class="status-item">
+            <div class="dot"></div>
+            <div>
+              <b>Picked Up & Delivered</b>
+              <span>Rider or admin updates every important delivery stage.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<div id="pwaInstallModal" class="pwa-modal">
+  <div class="pwa-card">
+    <img src="/icons/icon-192.png" alt="Ceetify Logistics">
+    <h2>Install Ceetify Logistics</h2>
+    <p>Add the app to your phone for faster booking, tracking, and push notifications.</p>
+
+    <button id="pwaInstallBtn" class="btn-red">Install App</button>
+    <button id="pwaCloseBtn" class="light">Not now</button>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="home.html" class="active"><span>⌂</span>Home</a>
+  <a href="booking.html"><span>＋</span>Book</a>
+  <a href="tracking.html"><span>⌕</span>Track</a>
+  <a href="notifications.html"><span>🔔</span>Alerts</a>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/auth-guard.js"></script>
+
+<script>
+  async function startHome(){
+    const auth = await protectPage(["customer", "admin", "super_admin"]);
+
+    if(!auth) return;
+
+    document.documentElement.classList.remove("auth-loading");
+  }
+
+  startHome();
+</script>
+
+<script>
+  let deferredPrompt = null;
+
+  const pwaModal = document.getElementById("pwaInstallModal");
+  const pwaInstallBtn = document.getElementById("pwaInstallBtn");
+  const pwaCloseBtn = document.getElementById("pwaCloseBtn");
+  const openInstallBtn = document.getElementById("openInstallBtn");
+
+  function isStandalone(){
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
+  }
+
+  function showInstallModal(){
+    if(isStandalone()) return;
+    pwaModal.classList.add("show");
+  }
+
+  function hideInstallModal(){
+    pwaModal.classList.remove("show");
+  }
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+
+    if(!localStorage.getItem("ceetify_home_install_closed")){
+      showInstallModal();
+    }
+  });
+
+  openInstallBtn.addEventListener("click", () => {
+    if(deferredPrompt){
+      showInstallModal();
+    }else{
+      alert("Install is available from your browser menu if the prompt is not showing. Use Chrome on HTTPS or localhost.");
+    }
+  });
+
+  pwaInstallBtn.addEventListener("click", async () => {
+    if(!deferredPrompt){
+      alert("Install prompt is not ready. Please refresh or use Chrome menu > Install app.");
+      return;
+    }
+
+    hideInstallModal();
+    deferredPrompt.prompt();
+
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+
+  pwaCloseBtn.addEventListener("click", () => {
+    hideInstallModal();
+    localStorage.setItem("ceetify_home_install_closed", "yes");
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredPrompt = null;
+    hideInstallModal();
+    localStorage.setItem("ceetify_installed", "yes");
+  });
+
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/service-worker.js").catch(console.error);
+    });
+  }
+</script>
+
+</body>
+</html>
