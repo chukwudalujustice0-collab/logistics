@@ -1,6 +1,6 @@
 /* service-worker.js */
 
-const CACHE_NAME = "ceetify-logistics-v22";
+const CACHE_NAME = "ceetify-logistics-v23";
 
 const STATIC_ASSETS = [
   "/",
@@ -11,7 +11,6 @@ const STATIC_ASSETS = [
   "/icons/icon-512.png"
 ];
 
-// INSTALL
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
@@ -24,32 +23,25 @@ self.addEventListener("install", (event) => {
       }
     })
   );
-
   self.skipWaiting();
 });
 
-// ACTIVATE
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
       )
     )
   );
-
   self.clients.claim();
 });
 
-// FETCH
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   const url = new URL(event.request.url);
 
-  // 🚫 NEVER CACHE AUTH / API
   if (
     url.pathname.includes("/rest/v1/") ||
     url.pathname.includes("/auth/v1/") ||
@@ -59,13 +51,11 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // 🚫 NEVER CACHE HTML (CRITICAL FIX)
   if (event.request.headers.get("accept")?.includes("text/html")) {
     event.respondWith(fetch(event.request));
     return;
   }
 
-  // ✅ CACHE STATIC FILES ONLY
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
@@ -73,14 +63,66 @@ self.addEventListener("fetch", (event) => {
       return fetch(event.request)
         .then((response) => {
           const copy = response.clone();
-
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(event.request, copy).catch(() => {});
           });
-
           return response;
         })
         .catch(() => caches.match("/offline.html"));
+    })
+  );
+});
+
+/* PUSH NOTIFICATIONS */
+self.addEventListener("push", (event) => {
+  if (!event.data) return;
+
+  let payload = {};
+
+  try {
+    payload = event.data.json();
+  } catch (e) {
+    payload = {};
+  }
+
+  const title =
+    payload?.notification?.title ||
+    payload?.data?.title ||
+    "Ceetify Logistics";
+
+  const body =
+    payload?.notification?.body ||
+    payload?.data?.body ||
+    "You have a new delivery update.";
+
+  const url =
+    payload?.data?.url ||
+    "/notifications.html";
+
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body,
+      icon: "/icons/icon-192.png",
+      badge: "/icons/icon-192.png",
+      vibrate: [200, 100, 200],
+      data: { url }
+    })
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+
+  const url = event.notification.data?.url || "/notifications.html";
+
+  event.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url.includes(url) && "focus" in client) {
+          return client.focus();
+        }
+      }
+      return clients.openWindow(url);
     })
   );
 });
