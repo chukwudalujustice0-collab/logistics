@@ -1,291 +1,438 @@
-<!-- login.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="auth-loading">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Login | Ceetify Logistics</title>
-  <meta name="theme-color" content="#0b347c" />
+  <meta name="theme-color" content="#123f91" />
 
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="icon" href="/icons/icon-192.png" />
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    document.documentElement.classList.add("auth-loading");
+  </script>
 
   <style>
     :root{
-      --red:#dc1f2f;
-      --blue:#0b347c;
-      --dark:#071f4f;
-      --white:#fff;
+      --blue:#123f91;
+      --blue2:#082b6f;
+      --red:#e51b34;
+      --text:#152033;
+      --muted:#727b8c;
+      --line:#edf0f5;
+      --card:#ffffff;
       --soft:#f5f8ff;
-      --text:#101828;
-      --muted:#667085;
-      --line:#e6ebf2;
+      --danger:#b42318;
+      --success:#067647;
     }
 
     *{box-sizing:border-box}
 
     body{
       margin:0;
-      font-family:Arial,sans-serif;
-      background:linear-gradient(135deg,#ffffff,#f3f7ff,#fff2f3);
       min-height:100vh;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(18,63,145,.18), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(229,27,52,.13), transparent 32%),
+        linear-gradient(180deg,#f8fbff,#fff);
       color:var(--text);
     }
 
-    .wrap{
+    .page{
       min-height:100vh;
+      padding:42px 18px 28px;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:24px;
     }
 
     .card{
       width:100%;
-      max-width:420px;
-      background:white;
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:26px;
-      box-shadow:0 20px 55px rgba(7,31,79,.15);
+      max-width:430px;
+      background:var(--card);
+      border:1px solid rgba(18,63,145,.07);
+      border-radius:28px;
+      padding:34px 26px 28px;
+      box-shadow:0 24px 70px rgba(15,35,75,.14);
+    }
+
+    .logo-wrap{
+      text-align:center;
+      margin-bottom:20px;
     }
 
     .logo{
-      text-align:center;
-      margin-bottom:22px;
-    }
-
-    .logo img{
-      width:78px;
-      height:78px;
-      border-radius:20px;
+      width:92px;
+      height:auto;
       object-fit:contain;
     }
 
     h1{
-      margin:12px 0 5px;
+      margin:0;
+      text-align:center;
       color:var(--blue);
-      font-size:28px;
+      font-size:34px;
+      line-height:1.1;
+      font-weight:900;
+      letter-spacing:-.8px;
     }
 
-    .logo p{
-      margin:0;
+    .subtitle{
+      margin:10px 0 28px;
+      text-align:center;
       color:var(--muted);
-      font-size:14px;
+      font-size:16px;
+      line-height:1.45;
     }
 
     label{
       display:block;
-      font-size:13px;
-      font-weight:bold;
+      font-size:14px;
+      font-weight:800;
+      margin:0 0 8px;
       color:#344054;
-      margin:14px 0 7px;
     }
 
-    input{
+    .field{
+      position:relative;
+      margin-bottom:18px;
+    }
+
+    .field input{
       width:100%;
-      padding:14px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      font-size:15px;
+      height:58px;
+      border:1.5px solid #e6e9ef;
+      border-radius:17px;
+      padding:0 48px 0 18px;
+      font-size:17px;
       outline:none;
+      background:#fff;
+      color:var(--text);
     }
 
-    input:focus{
+    .field input:focus{
       border-color:var(--blue);
+      box-shadow:0 0 0 4px rgba(18,63,145,.08);
     }
 
-    button{
-      width:100%;
+    .icon-btn{
+      position:absolute;
+      right:12px;
+      top:34px;
       border:0;
-      border-radius:999px;
-      padding:14px;
-      margin-top:14px;
-      font-weight:900;
+      background:transparent;
+      color:#697386;
+      font-size:20px;
+      height:38px;
+      width:38px;
       cursor:pointer;
-      font-size:15px;
-    }
-
-    .btn-red{
-      background:var(--red);
-      color:white;
-    }
-
-    .btn-blue{
-      background:var(--blue);
-      color:white;
-    }
-
-    .btn-light{
-      background:#eef3ff;
-      color:var(--blue);
     }
 
     .row{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      gap:10px;
-      margin-top:14px;
+      gap:12px;
+      margin:2px 0 20px;
       font-size:14px;
     }
 
-    .row a{
+    .remember{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:#667085;
+      font-weight:700;
+    }
+
+    a{
       color:var(--red);
       text-decoration:none;
-      font-weight:bold;
+      font-weight:850;
     }
 
-    .msg{
-      display:none;
-      margin-top:14px;
-      padding:12px;
-      border-radius:14px;
-      font-size:14px;
-      line-height:1.5;
+    .btn{
+      width:100%;
+      height:58px;
+      border:0;
+      border-radius:999px;
+      font-size:17px;
+      font-weight:900;
+      color:#fff;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
     }
 
-    .msg.error{
-      display:block;
-      background:#fff1f3;
-      color:#b42318;
-      border:1px solid #ffd1d7;
-    }
+    .btn-red{background:linear-gradient(135deg,#f21d3a,#d90f28)}
+    .btn-blue{background:linear-gradient(135deg,#16499f,#082d75); margin-top:13px}
 
-    .msg.success{
-      display:block;
-      background:#ecfdf3;
-      color:#027a48;
-      border:1px solid #abefc6;
+    .btn:disabled{
+      opacity:.7;
+      cursor:not-allowed;
     }
 
     .divider{
-      text-align:center;
-      color:var(--muted);
-      margin:18px 0 6px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:#98a2b3;
       font-size:13px;
+      font-weight:800;
+      margin:18px 0 4px;
+    }
+
+    .divider:before,.divider:after{
+      content:"";
+      flex:1;
+      height:1px;
+      background:var(--line);
+    }
+
+    .note{
+      margin:16px 0 0;
+      padding:13px 14px;
+      border-radius:16px;
+      background:#f6f8ff;
+      color:#667085;
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .message{
+      display:none;
+      margin:16px 0 0;
+      padding:14px;
+      border-radius:16px;
+      font-size:14px;
+      line-height:1.5;
+      font-weight:700;
+    }
+
+    .message.error{
+      display:block;
+      background:#fff1f3;
+      color:var(--danger);
+      border:1px solid #ffd6de;
+    }
+
+    .message.success{
+      display:block;
+      background:#ecfdf3;
+      color:var(--success);
+      border:1px solid #abefc6;
+    }
+
+    .links{
+      display:flex;
+      justify-content:space-between;
+      margin-top:24px;
+      font-size:15px;
     }
 
     .footer{
+      margin-top:28px;
       text-align:center;
-      margin-top:18px;
-      font-size:14px;
-      color:var(--muted);
+      color:#667085;
+      font-size:15px;
+      line-height:1.4;
     }
 
-    .footer a{
-      color:var(--blue);
-      font-weight:bold;
-      text-decoration:none;
+    .loader{
+      width:18px;
+      height:18px;
+      border:3px solid rgba(255,255,255,.45);
+      border-top-color:#fff;
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+      display:none;
+    }
+
+    .loading .loader{display:inline-block}
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    @media(max-width:380px){
+      .card{padding:30px 20px 24px;border-radius:24px}
+      h1{font-size:30px}
     }
   </style>
 </head>
 
 <body>
+  <main class="page">
+    <section class="card">
+      <div class="logo-wrap">
+        <img src="icons/ceetify-logistics-logo.png" class="logo" alt="Ceetify Logistics Logo" />
+      </div>
 
-<div class="wrap">
-  <div class="card">
-
-    <div class="logo">
-      <img src="/icons/icon-192.png" alt="Ceetify Logistics">
       <h1>Welcome Back</h1>
-      <p>Login to continue your delivery booking.</p>
-    </div>
+      <p class="subtitle">Login to continue your delivery booking.</p>
 
-    <form id="loginForm">
-      <label>Email Address</label>
-      <input id="email" type="email" placeholder="Enter your email" required>
+      <form id="loginForm">
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input id="email" type="email" placeholder="Enter your email" autocomplete="email" required />
+        </div>
 
-      <label>Password</label>
-      <input id="password" type="password" placeholder="Enter your password" required>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required />
+          <button type="button" class="icon-btn" id="togglePassword">👁</button>
+        </div>
 
-      <button class="btn-red" type="submit">Login</button>
-    </form>
+        <div class="row">
+          <label class="remember">
+            <input type="checkbox" id="rememberMe" checked />
+            Remember me
+          </label>
+          <a href="forgot-password.html">Forgot?</a>
+        </div>
 
-    <button class="btn-blue" id="biometricBtn" type="button">
-      Login with Biometric / Passkey
-    </button>
+        <button class="btn btn-red" id="loginBtn" type="submit">
+          <span class="loader"></span>
+          <span>Login</span>
+        </button>
+      </form>
 
-    <div class="divider">Biometric works only after passkey setup is added.</div>
+      <div class="divider">OR</div>
 
-    <div id="message" class="msg"></div>
+      <button class="btn btn-blue" id="biometricBtn" type="button">
+        Login with Biometric / Passkey
+      </button>
 
-    <div class="row">
-      <a href="index.html">Home</a>
-      <a href="signup.html">Create Account</a>
-    </div>
+      <div class="note">
+        Biometric login works after passkey setup has been added to your account.
+      </div>
 
-    <div class="footer">
-      Ceetify Logistics<br>
-      Powered by Ceetify Multi-Ventures Ltd
-    </div>
+      <div id="message" class="message"></div>
 
-  </div>
-</div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="signup.html">Create Account</a>
+      </div>
 
-<script>
-  const SUPABASE_URL = "https://vjopoldebuwcjjezqfum.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqb3BvbGRlYnV3Y2pqZXpxZnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc3OTUxNzcsImV4cCI6MjA5MzM3MTE3N30.EPDxfnsj50dryIt-aJsyqZynVTmUdS2n_fNjv1caj24";
+      <div class="footer">
+        Ceetify Logistics<br />
+        Powered by Ceetify Multi-Ventures Ltd
+      </div>
+    </section>
+  </main>
 
-  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  const form = document.getElementById("loginForm");
-  const msg = document.getElementById("message");
-  const biometricBtn = document.getElementById("biometricBtn");
+  <script>
+    const SUPABASE_URL = "https://vjopoldebuwcjjezqfum.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqb3BvbGRlYnV3Y2pqZXpxZnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc3OTUxNzcsImV4cCI6MjA5MzM3MTE3N30.EPDxfnsj50dryIt-aJsyqZynVTmUdS2n_fNjv1caj24";
 
-  function showMessage(text, type = "error"){
-    msg.textContent = text;
-    msg.className = "msg " + type;
-  }
-
-  function getNextPage(){
-    const params = new URLSearchParams(location.search);
-    return params.get("next") || "home.html";
-  }
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    showMessage("Logging in...", "success");
-
-    const { data, error } = await client.auth.signInWithPassword({
-      email,
-      password
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
     });
 
-    if(error){
-      showMessage(error.message || "Login failed. Please check your details.");
-      return;
+    const loginForm = document.getElementById("loginForm");
+    const loginBtn = document.getElementById("loginBtn");
+    const biometricBtn = document.getElementById("biometricBtn");
+    const messageBox = document.getElementById("message");
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    function getNextPage(){
+      const params = new URLSearchParams(location.search);
+      return params.get("next") || "home.html";
     }
 
-    showMessage("Login successful. Redirecting...", "success");
-
-    setTimeout(() => {
-      location.href = getNextPage();
-    }, 700);
-  });
-
-  biometricBtn.addEventListener("click", async () => {
-    if(!window.PublicKeyCredential){
-      showMessage("Biometric login is not supported on this browser.");
-      return;
+    function showMessage(text, type = "error"){
+      messageBox.textContent = text;
+      messageBox.className = "message " + type;
     }
 
-    showMessage(
-      "Biometric/passkey button is ready, but secure biometric login needs backend passkey registration and verification before activation."
-    );
-  });
+    function clearMessage(){
+      messageBox.textContent = "";
+      messageBox.className = "message";
+    }
 
-  if("serviceWorker" in navigator){
-    navigator.serviceWorker.register("/service-worker.js").catch(console.error);
-  }
-</script>
+    function setLoading(button, loading){
+      button.disabled = loading;
+      button.classList.toggle("loading", loading);
+    }
 
+    togglePassword.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      togglePassword.textContent = isPassword ? "🙈" : "👁";
+    });
+
+    async function checkExistingSession(){
+      const { data } = await supabaseClient.auth.getSession();
+      if(data?.session){
+        location.href = getNextPage();
+      }
+    }
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearMessage();
+      setLoading(loginBtn, true);
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      setLoading(loginBtn, false);
+
+      if(error){
+        showMessage(error.message || "Login failed. Please check your email and password.");
+        return;
+      }
+
+      if(!data?.session){
+        showMessage("Login failed. Please try again.");
+        return;
+      }
+
+      showMessage("Login successful. Redirecting...", "success");
+
+      setTimeout(() => {
+        location.href = getNextPage();
+      }, 600);
+    });
+
+    biometricBtn.addEventListener("click", async () => {
+      clearMessage();
+
+      if(!window.PublicKeyCredential){
+        showMessage("Biometric/passkey is not supported on this device or browser.");
+        return;
+      }
+
+      showMessage("Passkey backend is required before biometric login can be activated.", "error");
+
+      /*
+        REAL PASSKEY FLOW TO CONNECT LATER:
+
+        1. Call your backend:
+           GET /api/passkey/login-options
+
+        2. Use:
+           const credential = await navigator.credentials.get({ publicKey: options });
+
+        3. Send credential back:
+           POST /api/passkey/verify-login
+
+        4. Backend verifies passkey and creates/returns Supabase session.
+      */
+    });
+
+    checkExistingSession();
+  </script>
 </body>
 </html>
