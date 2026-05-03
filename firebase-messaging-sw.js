@@ -16,23 +16,25 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  const notification = payload.notification || {};
-  const data = payload.data || {};
+  const title =
+    payload?.notification?.title ||
+    payload?.data?.title ||
+    "Ceetify Logistics";
 
-  const title = notification.title || data.title || "Ceetify Logistics";
-  const body = notification.body || data.body || "You have a new delivery update.";
+  const body =
+    payload?.notification?.body ||
+    payload?.data?.body ||
+    "You have a new delivery update.";
 
   self.registration.showNotification(title, {
     body,
     icon: "/icons/icon-192.png",
     badge: "/icons/icon-192.png",
-    image: data.image || undefined,
-    vibrate: [200, 100, 200],
     data: {
-      url: data.url || "/notifications.html",
-      tracking_id: data.tracking_id || "",
-      order_id: data.order_id || "",
-      type: data.type || "general"
+      url: payload?.data?.url || "/notifications.html",
+      tracking_id: payload?.data?.tracking_id || "",
+      order_id: payload?.data?.order_id || "",
+      type: payload?.data?.type || "general"
     }
   });
 });
@@ -43,16 +45,6 @@ self.addEventListener("notificationclick", (event) => {
   const url = event.notification.data?.url || "/notifications.html";
 
   event.waitUntil(
-    clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
-      for (const client of clientList) {
-        if (client.url.includes(url) && "focus" in client) {
-          return client.focus();
-        }
-      }
-
-      if (clients.openWindow) {
-        return clients.openWindow(url);
-      }
-    })
+    clients.openWindow(url)
   );
 });
