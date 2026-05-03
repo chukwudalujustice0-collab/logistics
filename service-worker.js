@@ -1,8 +1,8 @@
 /* service-worker.js */
 
-const CACHE_NAME = "ceetify-logistics-v21";
+const CACHE_NAME = "ceetify-logistics-v22";
 
-const ASSETS = [
+const STATIC_ASSETS = [
   "/",
   "/index.html",
   "/offline.html",
@@ -11,14 +11,15 @@ const ASSETS = [
   "/icons/icon-512.png"
 ];
 
+// INSTALL
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
-      for (const asset of ASSETS) {
+      for (const asset of STATIC_ASSETS) {
         try {
           await cache.add(asset);
-        } catch (error) {
-          console.warn("Cache skipped:", asset, error);
+        } catch (e) {
+          console.warn("Cache skipped:", asset);
         }
       }
     })
@@ -27,6 +28,7 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 
+// ACTIVATE
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -41,11 +43,13 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+// FETCH
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   const url = new URL(event.request.url);
 
+  // 🚫 NEVER CACHE AUTH / API
   if (
     url.pathname.includes("/rest/v1/") ||
     url.pathname.includes("/auth/v1/") ||
@@ -55,21 +59,28 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // 🚫 NEVER CACHE HTML (CRITICAL FIX)
+  if (event.request.headers.get("accept")?.includes("text/html")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // ✅ CACHE STATIC FILES ONLY
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const copy = response.clone();
+    caches.match(event.request).then((cached) => {
+      if (cached) return cached;
 
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, copy).catch(() => {});
-        });
+      return fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
 
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request).then((cached) => {
-          return cached || caches.match("/offline.html");
-        });
-      })
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, copy).catch(() => {});
+          });
+
+          return response;
+        })
+        .catch(() => caches.match("/offline.html"));
+    })
   );
 });
