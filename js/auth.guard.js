@@ -1,9 +1,15 @@
 /* js/auth-guard.js */
 
 const SUPABASE_URL = "https://vjopoldebuwcjjezqfum.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY_HERE";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqb3BvbGRlYnV3Y2pqZXpxZnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc3OTUxNzcsImV4cCI6MjA5MzM3MTE3N30.EPDxfnsj50dryIt-aJsyqZynVTmUdS2n_fNjv1caj24";
 
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
+  }
+});
 
 async function protectPage(allowedRoles = []) {
   try {
@@ -12,7 +18,7 @@ async function protectPage(allowedRoles = []) {
     const { data: sessionData, error: sessionError } =
       await supabaseClient.auth.getSession();
 
-    if (sessionError || !sessionData.session) {
+    if (sessionError || !sessionData?.session) {
       showAuthError("Access denied. Please login to continue.");
       redirectToLogin();
       return null;
@@ -22,14 +28,18 @@ async function protectPage(allowedRoles = []) {
 
     const { data: profile, error: profileError } = await supabaseClient
       .from("profiles")
-      .select("*")
+      .select("id, full_name, email, phone, role, status")
       .eq("id", user.id)
-      .single();
+      .maybeSingle();
 
-    if (profileError || !profile) {
-      showAuthError("Profile not found. Please login again.");
-      await supabaseClient.auth.signOut();
-      redirectToLogin();
+    if (profileError) {
+      console.error("Profile error:", profileError);
+      showAuthError("Profile error: " + profileError.message);
+      return null;
+    }
+
+    if (!profile) {
+      showAuthError("Profile not found for this account.");
       return null;
     }
 
@@ -65,21 +75,21 @@ async function protectPage(allowedRoles = []) {
 
   } catch (error) {
     console.error(error);
-    showAuthError("Authentication check failed. Please login again.");
-    redirectToLogin();
+    showAuthError("Authentication check failed: " + error.message);
     return null;
   }
 }
 
 function redirectToLogin() {
   const next = encodeURIComponent(location.pathname.split("/").pop() || "home.html");
-
   setTimeout(() => {
     location.href = `login.html?next=${next}`;
   }, 1200);
 }
 
 function showAuthError(message) {
+  document.documentElement.classList.remove("auth-loading");
+
   document.body.innerHTML = `
     <div style="
       min-height:100vh;
@@ -101,7 +111,15 @@ function showAuthError(message) {
       ">
         <h2 style="color:#0b347c;margin:0 0 10px;">Ceetify Logistics</h2>
         <p style="color:#dc1f2f;font-weight:bold;margin:0 0 14px;">${message}</p>
-        <p style="color:#667085;margin:0;">Redirecting...</p>
+        <a href="login.html" style="
+          display:inline-flex;
+          background:#0b347c;
+          color:white;
+          padding:12px 18px;
+          border-radius:999px;
+          text-decoration:none;
+          font-weight:bold;
+        ">Go to Login</a>
       </div>
     </div>
   `;
