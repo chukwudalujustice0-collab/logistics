@@ -18,23 +18,27 @@ let firebaseMessaging = null;
 
 async function initPushNotifications(userId) {
   try {
-    if (!userId) return { success: false, error: "User ID is required." };
+    if (!userId) {
+      return { success: false, error: "User ID is required." };
+    }
 
     if (!("Notification" in window)) {
-      return { success: false, error: "Notifications not supported." };
+      return { success: false, error: "Notifications are not supported on this browser." };
     }
 
     if (!("serviceWorker" in navigator)) {
-      return { success: false, error: "Service worker not supported." };
+      return { success: false, error: "Service worker is not supported on this browser." };
     }
 
     const permission = await Notification.requestPermission();
 
     if (permission !== "granted") {
-      return { success: false, error: "Notification permission not granted." };
+      return { success: false, error: "Notification permission was not granted." };
     }
 
-    const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+    const registration =
+      (await navigator.serviceWorker.getRegistration("/")) ||
+      (await navigator.serviceWorker.register("/service-worker.js"));
 
     if (!firebase.apps.length) {
       firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
@@ -50,7 +54,7 @@ async function initPushNotifications(userId) {
     });
 
     if (!token) {
-      return { success: false, error: "No FCM token generated." };
+      return { success: false, error: "FCM token was not generated." };
     }
 
     const { error } = await supabaseClient.from("push_tokens").upsert(
@@ -65,7 +69,9 @@ async function initPushNotifications(userId) {
       { onConflict: "user_id,token" }
     );
 
-    if (error) return { success: false, error: error.message };
+    if (error) {
+      return { success: false, error: error.message };
+    }
 
     firebaseMessaging.onMessage((payload) => {
       const title =
@@ -78,19 +84,24 @@ async function initPushNotifications(userId) {
         payload?.data?.body ||
         "You have a new delivery update.";
 
-      new Notification(title, {
-        body,
-        icon: "/icons/icon-192.png",
-        badge: "/icons/icon-192.png",
-        data: payload?.data || {}
-      });
+      if (Notification.permission === "granted") {
+        new Notification(title, {
+          body,
+          icon: "/icons/icon-192.png",
+          badge: "/icons/icon-192.png",
+          data: payload?.data || {}
+        });
+      }
     });
 
     return { success: true, token };
 
   } catch (error) {
     console.error("Push setup error:", error);
-    return { success: false, error: error.message };
+    return {
+      success: false,
+      error: error.message || "Push notification setup failed."
+    };
   }
 }
 
