@@ -3,11 +3,10 @@
 <html lang="en" class="auth-loading">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Home | Ceetify Logistics</title>
-  <meta name="theme-color" content="#0b347c" />
 
+  <meta name="theme-color" content="#0b347c" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="/icons/icon-192.png" />
@@ -17,20 +16,18 @@
   </script>
 
   <style>
-    html.auth-loading body{
-      display:none;
-    }
+    html.auth-loading body{display:none}
 
     :root{
-      --red:#dc1f2f;
       --blue:#0b347c;
-      --dark:#071f4f;
-      --white:#ffffff;
-      --soft:#f5f8ff;
-      --text:#101828;
+      --blue2:#071f4f;
+      --red:#dc1f2f;
+      --bg:#f6f8fc;
+      --text:#111827;
       --muted:#667085;
-      --line:#e6ebf2;
-      --shadow:0 18px 45px rgba(7,31,79,.14);
+      --line:#e5eaf2;
+      --white:#fff;
+      --shadow:0 18px 45px rgba(7,31,79,.12);
     }
 
     *{box-sizing:border-box}
@@ -38,31 +35,25 @@
     body{
       margin:0;
       font-family:Arial,sans-serif;
-      background:#f5f8ff;
+      background:var(--bg);
       color:var(--text);
+      padding-bottom:86px;
     }
 
     a{text-decoration:none;color:inherit}
 
-    .app{
-      min-height:100vh;
-      padding-bottom:84px;
-    }
-
     .top{
-      background:linear-gradient(135deg,var(--dark),var(--blue));
+      background:linear-gradient(135deg,var(--blue2),var(--blue));
       color:white;
-      padding:18px 18px 28px;
-      border-bottom-left-radius:28px;
-      border-bottom-right-radius:28px;
-      box-shadow:var(--shadow);
+      padding:18px 20px 74px;
+      border-bottom-left-radius:34px;
+      border-bottom-right-radius:34px;
     }
 
     .top-row{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:12px;
+      align-items:center;
     }
 
     .brand{
@@ -72,30 +63,55 @@
     }
 
     .brand img{
-      width:48px;
-      height:48px;
-      border-radius:14px;
+      width:46px;
+      height:46px;
       background:white;
+      border-radius:14px;
       object-fit:contain;
     }
 
-    .brand b{
-      display:block;
-      font-size:17px;
+    .brand b{font-size:17px}
+    .brand small{display:block;color:#dbe7ff;font-size:12px;margin-top:2px}
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
     }
 
-    .brand small{
-      display:block;
-      color:#dce7ff;
-      font-size:12px;
-      margin-top:2px;
-    }
-
-    .icon-btn{
+    .bell{
+      position:relative;
+      width:44px;
+      height:44px;
       border:0;
-      width:42px;
-      height:42px;
-      border-radius:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.14);
+      color:white;
+      font-size:20px;
+      cursor:pointer;
+    }
+
+    .badge{
+      position:absolute;
+      top:-5px;
+      right:-5px;
+      background:var(--red);
+      color:white;
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .logout{
+      width:44px;
+      height:44px;
+      border:0;
+      border-radius:16px;
       background:rgba(255,255,255,.14);
       color:white;
       font-size:18px;
@@ -103,169 +119,230 @@
     }
 
     .welcome{
-      margin-top:22px;
+      margin-top:24px;
+    }
+
+    .welcome p{
+      margin:0 0 6px;
+      color:#dbe7ff;
+      font-size:14px;
     }
 
     .welcome h1{
       margin:0;
-      font-size:28px;
-      line-height:1.1;
+      font-size:34px;
+      line-height:1.05;
     }
 
-    .welcome p{
-      margin:8px 0 0;
-      color:#dce7ff;
-      line-height:1.5;
-      font-size:14px;
-    }
-
-    .container{
+    .main{
       width:min(980px,92%);
-      margin:auto;
+      margin:-48px auto 0;
     }
 
-    .quick{
-      margin-top:-18px;
+    .actions{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:repeat(3,1fr);
       gap:12px;
     }
 
-    .quick a,
-    .quick button{
-      border:0;
-      min-height:105px;
-      border-radius:22px;
-      padding:18px;
+    .action-card{
       background:white;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:18px;
+      min-height:132px;
       box-shadow:var(--shadow);
-      cursor:pointer;
-      text-align:left;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
     }
 
-    .quick b{
+    .icon{
+      width:50px;
+      height:50px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-size:22px;
+      margin-bottom:14px;
+    }
+
+    .icon.red{background:var(--red)}
+    .icon.blue{background:var(--blue)}
+
+    .action-card b{
       display:block;
-      color:var(--blue);
+      color:#101828;
       font-size:17px;
-      margin-bottom:6px;
+      margin-bottom:4px;
     }
 
-    .quick span{
+    .action-card span{
       display:block;
       color:var(--muted);
       font-size:13px;
-      line-height:1.45;
     }
 
     .section{
-      margin-top:24px;
+      margin-top:22px;
     }
 
-    .section-title{
+    .slider{
+      overflow:hidden;
+      border-radius:26px;
+      box-shadow:0 14px 35px rgba(7,31,79,.08);
+    }
+
+    .slides{
       display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:12px;
-    }
-
-    .section-title h2{
-      font-size:19px;
-      margin:0;
-      color:var(--dark);
-    }
-
-    .section-title a{
-      color:var(--red);
-      font-size:13px;
-      font-weight:bold;
-    }
-
-    .panel{
-      background:white;
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:18px;
-      box-shadow:0 10px 26px rgba(16,24,40,.05);
-    }
-
-    .status-list{
-      display:grid;
-      gap:12px;
-    }
-
-    .status-item{
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-      padding:14px;
-      background:var(--soft);
-      border-radius:18px;
-    }
-
-    .dot{
-      width:12px;
-      height:12px;
-      border-radius:50%;
-      background:var(--red);
-      margin-top:4px;
-      flex:none;
-    }
-
-    .status-item b{
-      display:block;
-      color:var(--blue);
-      font-size:14px;
-    }
-
-    .status-item span{
-      display:block;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-      margin-top:3px;
+      transition:.45s ease;
     }
 
     .promo{
-      background:linear-gradient(135deg,#ffffff,#eef4ff);
+      min-width:100%;
+      background:linear-gradient(135deg,#ffffff,#edf4ff);
       border:1px solid var(--line);
-      border-radius:24px;
-      padding:18px;
+      padding:20px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:14px;
     }
 
-    .promo h3{
+    .promo h2{
       margin:0;
-      color:var(--dark);
-      font-size:18px;
+      color:var(--blue);
+      font-size:21px;
     }
 
     .promo p{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
+      margin:6px 0 10px;
+      color:#475467;
+      font-size:14px;
+    }
+
+    .price{
+      color:var(--red);
+      font-weight:900;
+      font-size:22px;
     }
 
     .btn{
       border:0;
       border-radius:999px;
-      padding:12px 16px;
+      padding:12px 18px;
       font-weight:900;
       cursor:pointer;
       white-space:nowrap;
     }
 
-    .btn-red{
-      background:var(--red);
-      color:white;
+    .btn-red{background:var(--red);color:white}
+    .btn-blue{background:var(--blue);color:white}
+    .btn-light{background:#eef3ff;color:var(--blue)}
+
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:12px;
     }
 
-    .btn-blue{
-      background:var(--blue);
+    .section-title h2{
+      margin:0;
+      font-size:20px;
+      color:#101828;
+    }
+
+    .section-title a{
+      color:var(--blue);
+      font-weight:900;
+      font-size:14px;
+    }
+
+    .activity{
+      background:white;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:16px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      box-shadow:0 10px 26px rgba(16,24,40,.05);
+    }
+
+    .activity-icon{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      background:#eef3ff;
+      color:var(--blue);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      flex:none;
+    }
+
+    .activity-info{flex:1}
+
+    .activity-info b{
+      display:block;
+      font-size:15px;
+      color:#101828;
+      margin-bottom:4px;
+    }
+
+    .activity-info span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .pill{
+      background:#dff8e7;
+      color:#067647;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .install-banner{
+      margin-top:18px;
+      background:linear-gradient(135deg,var(--blue2),var(--blue));
       color:white;
+      border-radius:24px;
+      padding:16px;
+      display:none;
+      align-items:center;
+      gap:14px;
+      box-shadow:var(--shadow);
+    }
+
+    .install-banner.show{display:flex}
+
+    .install-banner img{
+      width:54px;
+      height:54px;
+      border-radius:16px;
+      background:white;
+      object-fit:contain;
+    }
+
+    .install-banner div{flex:1}
+    .install-banner b{display:block;font-size:16px}
+    .install-banner span{display:block;color:#dbe7ff;font-size:13px;margin-top:3px}
+
+    .close-install{
+      border:0;
+      background:transparent;
+      color:white;
+      font-size:26px;
+      cursor:pointer;
     }
 
     .bottom-nav{
@@ -285,17 +362,19 @@
       text-align:center;
       font-size:12px;
       color:var(--muted);
-      font-weight:bold;
+      font-weight:900;
       padding:8px 4px;
+      border-radius:16px;
     }
 
     .bottom-nav a.active{
-      color:var(--red);
+      color:var(--blue);
+      background:#eef3ff;
     }
 
     .bottom-nav span{
       display:block;
-      font-size:19px;
+      font-size:21px;
       margin-bottom:3px;
     }
 
@@ -311,9 +390,7 @@
       padding:20px;
     }
 
-    .pwa-modal.show{
-      display:flex;
-    }
+    .pwa-modal.show{display:flex}
 
     .pwa-card{
       width:100%;
@@ -330,20 +407,10 @@
       height:82px;
       border-radius:22px;
       object-fit:contain;
-      margin-bottom:12px;
     }
 
-    .pwa-card h2{
-      margin:8px 0;
-      color:var(--blue);
-    }
-
-    .pwa-card p{
-      margin:0 0 12px;
-      color:var(--muted);
-      line-height:1.5;
-      font-size:14px;
-    }
+    .pwa-card h2{color:var(--blue);margin:12px 0 8px}
+    .pwa-card p{color:var(--muted);font-size:14px;line-height:1.5}
 
     .pwa-card button{
       width:100%;
@@ -355,27 +422,21 @@
       cursor:pointer;
     }
 
-    .pwa-card .light{
-      background:#eef3ff;
-      color:var(--blue);
-    }
-
-    @media(max-width:600px){
-      .quick{
-        grid-template-columns:1fr 1fr;
+    @media(max-width:700px){
+      .actions{
+        grid-template-columns:repeat(2,1fr);
       }
 
-      .welcome h1{
-        font-size:25px;
+      .action-card{
+        min-height:126px;
       }
 
       .promo{
-        display:block;
+        align-items:flex-start;
       }
 
-      .promo .btn{
-        margin-top:14px;
-        width:100%;
+      .welcome h1{
+        font-size:31px;
       }
     }
   </style>
@@ -383,108 +444,127 @@
 
 <body>
 
-<div class="app">
-
-  <header class="top">
-    <div class="top-row">
-      <div class="brand">
-        <img src="/icons/icon-192.png" alt="Ceetify Logistics">
-        <div>
-          <b>Ceetify Logistics</b>
-          <small data-user-email>Loading...</small>
-        </div>
+<header class="top">
+  <div class="top-row">
+    <div class="brand">
+      <img src="/icons/icon-192.png" alt="Ceetify Logistics">
+      <div>
+        <b>Ceetify Logistics</b>
+        <small data-user-email>Loading...</small>
       </div>
-
-      <button class="icon-btn" onclick="logoutUser()" title="Logout">⎋</button>
     </div>
 
-    <div class="welcome">
-      <h1>Hello, <span data-user-name>Customer</span></h1>
-      <p>Book, track and receive updates for your deliveries from one clean dashboard.</p>
+    <div class="top-actions">
+      <button class="bell" onclick="location.href='notifications.html'">🔔<span class="badge">0</span></button>
+      <button class="logout" onclick="logoutUser()">⎋</button>
     </div>
-  </header>
+  </div>
 
-  <main class="container">
+  <div class="welcome">
+    <p>Welcome back,</p>
+    <h1><span data-user-name>Customer</span> 👋</h1>
+  </div>
+</header>
 
-    <div class="quick">
-      <a href="booking.html">
+<main class="main">
+
+  <section class="actions">
+    <a class="action-card" href="booking.html">
+      <div>
+        <div class="icon red">📦</div>
         <b>Book Delivery</b>
-        <span>Create a new pickup and delivery request.</span>
-      </a>
+        <span>Send a parcel</span>
+      </div>
+    </a>
 
-      <a href="tracking.html">
+    <a class="action-card" href="tracking.html">
+      <div>
+        <div class="icon blue">📍</div>
         <b>Track Order</b>
-        <span>Use your Tracking ID to check progress.</span>
-      </a>
+        <span>Track your parcel</span>
+      </div>
+    </a>
 
-      <a href="notifications.html">
+    <a class="action-card" href="notifications.html">
+      <div>
+        <div class="icon blue">🔔</div>
         <b>Notifications</b>
-        <span>View order alerts and delivery updates.</span>
-      </a>
+        <span>View updates</span>
+      </div>
+    </a>
 
-      <button id="openInstallBtn">
+    <button class="action-card" id="openInstallBtn">
+      <div>
+        <div class="icon red">⬇</div>
         <b>Install App</b>
-        <span>Add Ceetify Logistics to your phone.</span>
-      </button>
-    </div>
+        <span>Add to phone</span>
+      </div>
+    </button>
+  </section>
 
-    <section class="section">
+  <section class="section slider">
+    <div class="slides" id="slides">
       <div class="promo">
         <div>
-          <h3>Delivery from ₦1,500</h3>
-          <p>Send packages within Owerri, environs, nearby towns and supported interstate routes.</p>
+          <h2>Reliable. Fast. Secure.</h2>
+          <p>Delivery from <span class="price">₦1,500</span></p>
         </div>
-        <a class="btn btn-red" href="booking.html">Start Booking</a>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-title">
-        <h2>Order Progress</h2>
-        <a href="tracking.html">Track now</a>
+        <a class="btn btn-red" href="booking.html">Book Now</a>
       </div>
 
-      <div class="panel">
-        <div class="status-list">
-          <div class="status-item">
-            <div class="dot"></div>
-            <div>
-              <b>Order Accepted</b>
-              <span>Admin confirms your request and prepares dispatch.</span>
-            </div>
-          </div>
-
-          <div class="status-item">
-            <div class="dot"></div>
-            <div>
-              <b>Rider Assigned</b>
-              <span>You receive rider name, phone number and ride number.</span>
-            </div>
-          </div>
-
-          <div class="status-item">
-            <div class="dot"></div>
-            <div>
-              <b>Picked Up & Delivered</b>
-              <span>Rider or admin updates every important delivery stage.</span>
-            </div>
-          </div>
+      <div class="promo">
+        <div>
+          <h2>Free Delivery Offer</h2>
+          <p>First 5 orders everyday get special delivery support.</p>
         </div>
+        <a class="btn btn-blue" href="booking.html">Claim</a>
       </div>
-    </section>
 
-  </main>
+      <div class="promo">
+        <div>
+          <h2>Track Every Order</h2>
+          <p>Use your tracking ID to follow your delivery progress.</p>
+        </div>
+        <a class="btn btn-red" href="tracking.html">Track</a>
+      </div>
+    </div>
+  </section>
 
-</div>
+  <section class="section">
+    <div class="section-title">
+      <h2>Recent Activity</h2>
+      <a href="tracking.html">View all ›</a>
+    </div>
+
+    <div class="activity">
+      <div class="activity-icon">📦</div>
+      <div class="activity-info">
+        <b>No recent order yet</b>
+        <span>Your latest delivery activities will appear here.</span>
+      </div>
+      <a class="btn btn-light" href="booking.html">Book</a>
+    </div>
+  </section>
+
+  <section class="install-banner" id="installBanner">
+    <img src="/icons/icon-192.png" alt="Ceetify Logistics">
+    <div>
+      <b>Install Ceetify Logistics</b>
+      <span>Faster access and real-time updates.</span>
+    </div>
+    <button class="btn btn-light" id="bannerInstallBtn">Install</button>
+    <button class="close-install" id="closeInstall">×</button>
+  </section>
+
+</main>
 
 <div id="pwaInstallModal" class="pwa-modal">
   <div class="pwa-card">
     <img src="/icons/icon-192.png" alt="Ceetify Logistics">
     <h2>Install Ceetify Logistics</h2>
-    <p>Add the app to your phone for faster booking, tracking, and push notifications.</p>
-
+    <p>Add the app to your phone for faster booking, tracking and push notifications.</p>
     <button id="pwaInstallBtn" class="btn-red">Install App</button>
-    <button id="pwaCloseBtn" class="light">Not now</button>
+    <button id="pwaCloseBtn" class="btn-light">Not now</button>
   </div>
 </div>
 
@@ -501,75 +581,87 @@
 <script>
   async function startHome(){
     const auth = await protectPage(["customer", "admin", "super_admin"]);
-
     if(!auth) return;
-
     document.documentElement.classList.remove("auth-loading");
   }
-
   startHome();
+</script>
+
+<script>
+  let slideIndex = 0;
+  const slides = document.getElementById("slides");
+
+  setInterval(() => {
+    slideIndex = (slideIndex + 1) % 3;
+    slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+  }, 3500);
 </script>
 
 <script>
   let deferredPrompt = null;
 
-  const pwaModal = document.getElementById("pwaInstallModal");
+  const modal = document.getElementById("pwaInstallModal");
+  const installBanner = document.getElementById("installBanner");
   const pwaInstallBtn = document.getElementById("pwaInstallBtn");
   const pwaCloseBtn = document.getElementById("pwaCloseBtn");
   const openInstallBtn = document.getElementById("openInstallBtn");
+  const bannerInstallBtn = document.getElementById("bannerInstallBtn");
+  const closeInstall = document.getElementById("closeInstall");
 
   function isStandalone(){
     return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
   }
 
-  function showInstallModal(){
+  function showInstall(){
     if(isStandalone()) return;
-    pwaModal.classList.add("show");
+    modal.classList.add("show");
+    installBanner.classList.add("show");
   }
 
-  function hideInstallModal(){
-    pwaModal.classList.remove("show");
+  function hideInstall(){
+    modal.classList.remove("show");
   }
 
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
 
-    if(!localStorage.getItem("ceetify_home_install_closed")){
-      showInstallModal();
+    if(!localStorage.getItem("ceetify_install_closed")){
+      installBanner.classList.add("show");
     }
   });
 
-  openInstallBtn.addEventListener("click", () => {
-    if(deferredPrompt){
-      showInstallModal();
-    }else{
-      alert("Install is available from your browser menu if the prompt is not showing. Use Chrome on HTTPS or localhost.");
-    }
-  });
-
-  pwaInstallBtn.addEventListener("click", async () => {
+  async function installApp(){
     if(!deferredPrompt){
-      alert("Install prompt is not ready. Please refresh or use Chrome menu > Install app.");
+      alert("Install is available from your browser menu if the prompt is not showing.");
       return;
     }
 
-    hideInstallModal();
+    hideInstall();
     deferredPrompt.prompt();
-
     await deferredPrompt.userChoice;
     deferredPrompt = null;
-  });
+    installBanner.classList.remove("show");
+  }
 
-  pwaCloseBtn.addEventListener("click", () => {
-    hideInstallModal();
-    localStorage.setItem("ceetify_home_install_closed", "yes");
-  });
+  openInstallBtn.onclick = showInstall;
+  bannerInstallBtn.onclick = installApp;
+  pwaInstallBtn.onclick = installApp;
+
+  pwaCloseBtn.onclick = () => {
+    hideInstall();
+    localStorage.setItem("ceetify_install_closed","yes");
+  };
+
+  closeInstall.onclick = () => {
+    installBanner.classList.remove("show");
+    localStorage.setItem("ceetify_install_closed","yes");
+  };
 
   window.addEventListener("appinstalled", () => {
     deferredPrompt = null;
-    hideInstallModal();
-    localStorage.setItem("ceetify_installed", "yes");
+    hideInstall();
+    installBanner.classList.remove("show");
   });
 
   if("serviceWorker" in navigator){
@@ -580,4 +672,4 @@
 </script>
 
 </body>
-</html>
+</html>a
