@@ -1,0 +1,283 @@
+<!-- admin-test-push.html -->
+<!DOCTYPE html>
+<html lang="en" class="auth-loading">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin Test Push | Ceetify Logistics</title>
+  <meta name="theme-color" content="#0b347c" />
+
+  <script>
+    document.documentElement.classList.add("auth-loading");
+  </script>
+
+  <style>
+    html.auth-loading body{display:none}
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:#f5f8ff;
+      color:#101828;
+      padding:20px;
+    }
+
+    .card{
+      max-width:540px;
+      margin:auto;
+      background:white;
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 18px 45px rgba(7,31,79,.14);
+    }
+
+    h1{
+      color:#0b347c;
+      margin:0 0 8px;
+    }
+
+    p{
+      color:#667085;
+      line-height:1.5;
+    }
+
+    label{
+      display:block;
+      margin-top:14px;
+      font-weight:bold;
+      color:#344054;
+    }
+
+    input, select, textarea{
+      width:100%;
+      margin-top:7px;
+      padding:13px;
+      border:1px solid #e6ebf2;
+      border-radius:14px;
+      font-size:14px;
+      box-sizing:border-box;
+    }
+
+    textarea{
+      min-height:90px;
+      resize:vertical;
+    }
+
+    button{
+      width:100%;
+      margin-top:16px;
+      padding:14px;
+      border:0;
+      border-radius:999px;
+      background:#dc1f2f;
+      color:white;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .blue{
+      background:#0b347c;
+    }
+
+    .msg{
+      margin-top:15px;
+      padding:12px;
+      border-radius:14px;
+      display:none;
+      font-weight:bold;
+      line-height:1.5;
+      white-space:pre-wrap;
+    }
+
+    .success{
+      display:block;
+      background:#ecfdf3;
+      color:#067647;
+      border:1px solid #abefc6;
+    }
+
+    .error{
+      display:block;
+      background:#fff1f3;
+      color:#b42318;
+      border:1px solid #ffd6de;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .top a{
+      color:#dc1f2f;
+      font-weight:bold;
+      text-decoration:none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="top">
+    <div>
+      <h1>Admin Test Push</h1>
+      <p>Send a test push notification to a selected user.</p>
+    </div>
+    <a href="home.html">Home</a>
+  </div>
+
+  <button class="blue" id="enablePushBtn">Enable Push On This Device</button>
+
+  <label>Select User</label>
+  <select id="userSelect">
+    <option value="">Loading users...</option>
+  </select>
+
+  <label>Title</label>
+  <input id="title" value="Ceetify Logistics" />
+
+  <label>Message</label>
+  <textarea id="body">This is a test push notification from Ceetify Logistics.</textarea>
+
+  <label>Open URL</label>
+  <input id="url" value="/notifications.html" />
+
+  <button id="sendBtn">Send Push To User</button>
+
+  <div id="msg" class="msg"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-messaging-compat.js"></script>
+
+<script src="/js/auth-guard.js"></script>
+<script src="/js/push-helper.js"></script>
+
+<script>
+  const SEND_PUSH_URL = "https://vjopoldebuwcjjezqfum.supabase.co/functions/v1/send-push";
+
+  const userSelect = document.getElementById("userSelect");
+  const titleInput = document.getElementById("title");
+  const bodyInput = document.getElementById("body");
+  const urlInput = document.getElementById("url");
+  const sendBtn = document.getElementById("sendBtn");
+  const enablePushBtn = document.getElementById("enablePushBtn");
+  const msg = document.getElementById("msg");
+
+  let authData = null;
+
+  function showMessage(text, type){
+    msg.textContent = text;
+    msg.className = "msg " + type;
+  }
+
+  async function loadUsers(){
+    userSelect.innerHTML = `<option value="">Select user</option>`;
+
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .select("id, full_name, email, phone, role")
+      .order("created_at", { ascending:false });
+
+    if(error){
+      showMessage(error.message, "error");
+      return;
+    }
+
+    (data || []).forEach(user => {
+      const option = document.createElement("option");
+      option.value = user.id;
+      option.textContent = `${user.full_name || user.email || user.phone || "User"} — ${user.role}`;
+      userSelect.appendChild(option);
+    });
+  }
+
+  enablePushBtn.addEventListener("click", async () => {
+    if(!authData?.user?.id){
+      showMessage("Admin auth not ready.", "error");
+      return;
+    }
+
+    enablePushBtn.disabled = true;
+    enablePushBtn.textContent = "Enabling push...";
+
+    const result = await initPushNotifications(authData.user.id);
+
+    enablePushBtn.disabled = false;
+    enablePushBtn.textContent = "Enable Push On This Device";
+
+    if(!result.success){
+      showMessage(result.error || "Push setup failed.", "error");
+      return;
+    }
+
+    showMessage("Push enabled for this admin device ✅", "success");
+  });
+
+  sendBtn.addEventListener("click", async () => {
+    const user_id = userSelect.value;
+
+    if(!user_id){
+      showMessage("Select a user first.", "error");
+      return;
+    }
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Sending...";
+
+    try{
+      const res = await fetch(SEND_PUSH_URL, {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          user_id,
+          title:titleInput.value.trim() || "Ceetify Logistics",
+          body:bodyInput.value.trim() || "You have a new notification.",
+          url:urlInput.value.trim() || "/notifications.html",
+          type:"admin_test",
+          create_in_app:true
+        })
+      });
+
+      const data = await res.json();
+
+      if(!res.ok || !data.success){
+        throw new Error(data.error || "Push failed.");
+      }
+
+      showMessage(
+        `Push sent ✅\nSent: ${data.sent}\nFailed: ${data.failed}`,
+        "success"
+      );
+
+    }catch(error){
+      showMessage(error.message, "error");
+    }finally{
+      sendBtn.disabled = false;
+      sendBtn.textContent = "Send Push To User";
+    }
+  });
+
+  async function startPage(){
+    authData = await protectPage(["admin", "super_admin"]);
+
+    if(!authData) return;
+
+    await loadUsers();
+
+    document.documentElement.classList.remove("auth-loading");
+  }
+
+  startPage();
+</script>
+
+</body>
+</html>
