@@ -9,7 +9,7 @@ const STATIC_ASSETS = [
   "/manifest.json",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
-  "/icons/badge-72.png"
+  "/icons/badge-72.jpg"
 ];
 
 self.addEventListener("install", (event) => {
@@ -127,7 +127,7 @@ self.addEventListener("push", (event) => {
   const options = {
     body,
     icon: "/icons/icon-192.png",
-    badge: "/icons/badge-72.png",
+    badge: "/icons/badge-72.jpg",
     vibrate: [200, 100, 200],
     requireInteraction: true,
     renotify: true,
